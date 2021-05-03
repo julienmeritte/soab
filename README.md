@@ -3,13 +3,13 @@
 ## VERSION 0.1-SNAPSHOT
 
 ## Board JIRA (ayant-droit)
-[text](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1)
+[Lien du Board](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1)
 
 ## Sprint Planning (lien externe)
-[text](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1/roadmap?shared=&atlOrigin=eyJpIjoiZDNkMTBmMDIzZDFlNGY0NGE1NGE5NDBlNWMwNTE2MDciLCJwIjoiaiJ9)
+[Lien du Planning externe](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1/roadmap?shared=&atlOrigin=eyJpIjoiZDNkMTBmMDIzZDFlNGY0NGE1NGE5NDBlNWMwNTE2MDciLCJwIjoiaiJ9)
 
 ## Sprint Planning (ayant-droit)
-[text](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1/roadmap)
+[Lien du Planning interne](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1/roadmap)
 
 ## Backlog projet (ayant-droit)
-[text](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1/backlog)
+[Lien du Backlog](https://vignan-pli.atlassian.net/jira/software/projects/PLI/boards/1/backlog)
