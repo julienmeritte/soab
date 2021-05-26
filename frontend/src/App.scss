@@ -1,3 +1,23 @@
 .App {
   text-align: center;
 }
+
+@mixin alert-color($color) {
+  background-color: $color;
+}
+
+$alert-types: "success", "danger", "warning";
+
+@each $type in $alert-types {
+  .alert-#{$type} {
+    display: flex;
+    width: 100%;
+    @if ($type == "danger") {
+      @include alert-color(red)
+    } @else if ($type == "warning") {
+      @include alert-color(orange)
+    } @else if ($type == "success") {
+      @include alert-color(green)
+    }
+  }
+}
