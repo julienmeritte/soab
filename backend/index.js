@@ -6,10 +6,18 @@ const keys = require("./config/keys");
 require("./models/User");
 require("./services/passportService");
 
-
-mongoose.connect(keys.mongoURI);
+const connectDatabase = require("./controllers/database");
 
 const app = express();
+
+connectDatabase();
+
+app.use(express.json({
+    extended: false
+}));
+
+
+
 
 app.use(
     cookieSession({
@@ -21,7 +29,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./routes/auth.routes")(app);
+app.use("/auth", require("./routes/auth.routes"));
+app.use("/api/users", require("./routes/user.routes"));
+app.use("/api/profile", require("./routes/profile.routes"));
 
 app.listen(3001, () => {
     console.log("Running on 3001.");
