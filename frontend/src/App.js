@@ -11,6 +11,7 @@ import store from "./service/store";
 import Alert from "./components/shared/alerts/alerts";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
+import Game from "./components/feature/game-page/game";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -34,6 +35,7 @@ const App = () => {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/game" component={Game} />
           </Switch>
 
           <footer>

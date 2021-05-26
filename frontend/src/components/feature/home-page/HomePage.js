@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../../config/app.url.json";
 
-function HomePage(props) {
+function HomePage() {
   return (
     <div className="App">
       <h1>Frontend SOAB - HOME PAGE</h1>
