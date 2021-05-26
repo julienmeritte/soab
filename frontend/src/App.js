@@ -1,40 +1,36 @@
-import React, { useState} from 'react';
-import './App.css';
-import Axios from 'axios';
+import React, { Fragment, useState } from "react";
+import "./App.scss";
+import Axios from "axios";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import HomePage from "./components/feature/home-page/HomePage";
+import Navbar from "./components/core/header/Navbar";
+import Register from "./components/feature/auth-pages/register-page/Register";
+import Login from "./components/feature/auth-pages/login-page/Login";
+import { Provider } from "react-redux";
+import store from "./service/store";
+import Alert from "./components/shared/alerts/alerts";
 
-function App() {
+const App = () => (
+  <Provider store={store}>
+    <Router>
+      <Fragment>
+        <header>
+          <Navbar />
+          <a href="/auth/google">Connect with Google.</a>
+        </header>
+        <Route exact path="/" component={HomePage}></Route>
+        <Alert></Alert>
+        <Switch>
+          <Route exact Path="/register" component={Register}></Route>
+          <Route exact Path="/login" component={Login}></Route>
+        </Switch>
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-
-  const addTest = () => {
-    Axios.post("http://localhost:3001/api/insert", {
-      name: name,
-      description: description,
-    }).then(() => {
-      alert('successfull test insertion');
-    });
-  };
-
-  return (
-    <div className="App">
-      <h1>Frontend SOAB</h1>
-
-      <label>TestName received:</label><br />
-      <input type="text" name="apitest" onChange={(e) => {
-        setName(e.target.value);
-      }}
-      />
-
-      <label>TestDescription received:</label><br />
-      <input type="text" name="apitest" onChange={(e) => {
-        setDescription(e.target.value);
-      }}
-      />
-
-      <button onClick={addTest}>Submit</button>
-    </div>
-  );
-}
+        <footer>
+          <h1>FOOTER in App.js</h1>
+        </footer>
+      </Fragment>
+    </Router>
+  </Provider>
+);
 
 export default App;
