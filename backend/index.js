@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
 const keys = require("./config/keys");
@@ -15,9 +14,6 @@ connectDatabase();
 app.use(express.json({
     extended: false
 }));
-
-
-
 
 app.use(
     cookieSession({
