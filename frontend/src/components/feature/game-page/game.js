@@ -5,7 +5,7 @@ import "./game.scss";
 
 function Game() {
   return (
-    <div class="game-scene">
+    <div className="game-scene">
       <TimeBombScene />
     </div>
   );
