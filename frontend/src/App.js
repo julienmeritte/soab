@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import "./App.scss";
+import './App.scss';
 import Axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./components/feature/home-page/HomePage";
@@ -12,6 +12,7 @@ import Alert from "./components/shared/alerts/alerts";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import Game from "./components/feature/game-page/game";
+
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -28,7 +29,26 @@ const App = () => {
         <Fragment>
           <header>
             <Navbar />
-            <a href="/auth/google">Connect with Google.</a>
+            <div className={'logo'}>
+              <img src="./soab_logo.png" />
+            </div>
+            <div className={'redirection'}>
+              <form className={'btn'} action={"/"} component={HomePage}>
+                <button>Home</button>
+              </form>
+              <form className={'btn'} action={"/login"} component={Login}>
+                <button>Login</button>
+              </form>
+              <form className={'btn'} action={"/register"} component={Register}>
+                <button>Register</button>
+              </form>
+              <form className={'btn'} action={"/game"} component={Game}>
+                <button>Game</button>
+              </form>
+              <form className={'btn'} action={"/auth/google"}>
+                <button>Connect with Google.</button>
+              </form>
+            </div>
           </header>
           <Route exact path="/" component={HomePage}></Route>
           <Alert></Alert>
@@ -37,9 +57,8 @@ const App = () => {
             <Route exact path="/register" component={Register} />
             <Route exact path="/game" component={Game} />
           </Switch>
-
           <footer>
-            <h1>FOOTER in App.js</h1>
+            <h1>Ici c'est le footer !</h1>
           </footer>
         </Fragment>
       </Router>

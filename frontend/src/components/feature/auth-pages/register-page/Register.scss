@@ -1,0 +1,62 @@
+.Register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 100%;
+  max-width: 100%;
+  height: 600px;
+
+  .display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    box-shadow: 0 0 13px 0 #000;
+
+    .formulaire {
+      flex: 0 0 100%;
+      max-width: 100%;
+      font-size: 40px;
+      font-family: monospace;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      height: 200px;
+      flex: 0 0 100%;
+      max-width: 100%;
+
+      input {
+        height: 20px;
+        flex: 0 0 60%;
+        max-width: 60%;
+        text-align: center;
+        border-radius: 20px;
+      }
+
+      .btn {
+        flex: 0 0 40%;
+        max-width: 40%;
+        height: 30px;
+
+        border: 3px solid #206ddc;
+        font-weight: bold;
+        border-radius: 20px;
+
+        background: #fff;
+        color: #6a6a6a;
+
+        &:hover {
+          background: #206ddc;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

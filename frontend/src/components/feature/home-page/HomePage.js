@@ -1,5 +1,6 @@
 import React from "react";
 import "../../../config/app.url.json";
+import './HomePage.scss';
 
 function HomePage() {
   return (

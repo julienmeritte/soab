@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setAlert } from "../../../../actions/alert";
 import { register } from "../../../../actions/auth";
 import PropTypes from "prop-types";
+import './Register.scss'
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -33,44 +34,50 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h3>Inscription</h3>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <input
-          type="text"
-          placeholder="Nom"
-          name="name"
-          value={name}
-          onChange={(e) => onChange(e)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={email}
-          onChange={(e) => onChange(e)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          name="password"
-          value={password}
-          onChange={(e) => onChange(e)}
-          required
-          minLength="6"
-        />
-        <input
-          type="password"
-          placeholder="Confirmer le mot de passe"
-          name="passwordBis"
-          value={passwordBis}
-          onChange={(e) => onChange(e)}
-          required
-          minLength="6"
-        />
-        <input type="submit" value="Register" />
-      </form>
+      <div className={'Register'}>
+        <div className={'display'}>
+          <div className={'formulaire'}>
+            <h3>Inscription</h3>
+            <form onSubmit={(e) => onSubmit(e)}>
+              <input
+                  type="text"
+                  placeholder="Nom"
+                  name="name"
+                  value={name}
+                  onChange={(e) => onChange(e)}
+                  required
+              />
+              <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => onChange(e)}
+                  required
+              />
+              <input
+                  type="password"
+                  placeholder="Mot de passe"
+                  name="password"
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                  required
+                  minLength="6"
+              />
+              <input
+                  type="password"
+                  placeholder="Confirmer le mot de passe"
+                  name="passwordBis"
+                  value={passwordBis}
+                  onChange={(e) => onChange(e)}
+                  required
+                  minLength="6"
+              />
+              <input className={'btn'} type="submit" value="Register" />
+            </form>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };
