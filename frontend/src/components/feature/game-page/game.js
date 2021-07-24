@@ -1,12 +1,12 @@
 import React from "react";
 import "../../../config/app.url.json";
-import TimeBombScene from "../../../games/TimeBomb/TimeBombScene";
+import Uno from "../../../games/uno/uno";
 import "./game.scss";
 
 function Game() {
   return (
     <div className="game-scene">
-      <TimeBombScene />
+      <Uno />
     </div>
   );
 }

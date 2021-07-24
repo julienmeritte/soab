@@ -1,19 +1,21 @@
 import * as THREE from "three";
 import Card from "../Card";
 import Board from "../Board";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Sky } from "@react-three/drei";
+import {Canvas} from "@react-three/fiber";
+import {OrbitControls, Sky} from "@react-three/drei";
+import React from "react";
+import { GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 
-export default function TimeBombScene() {
-  return (
-    <Canvas>
-      <OrbitControls />
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 15, 10]} angle="0.3" />
-      <Board />
-      <Card />
-    </Canvas>
-  );
+export default function Uno() {
+    const loader = new GLTFLoader();
+    return (
+        <Canvas camera={{fov: 75, position: [0, 0, 65]}} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
+            <ambientLight intensity={0.5}/>
+            <spotLight position={[10, 15, 10]} angle="0.3"/>
+            <Board/>
+            <Card/>
+        </Canvas>
+    );
 }
 
 /*const scene = new THREE.Scene();
