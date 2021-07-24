@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect } from "react";
-import './App.scss';
+import React, {Fragment, useState, useEffect, Suspense, lazy} from "react";
+import "./App.scss";
 import Axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./components/feature/home-page/HomePage";
@@ -52,11 +52,14 @@ const App = () => {
           </header>
           <Route exact path="/" component={HomePage}></Route>
           <Alert></Alert>
+          <Suspense fallback={<div>Loading... </div>}>
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/game" component={Game} />
           </Switch>
+          </Suspense>
+
           <footer>
             <h1>Ici c'est le footer !</h1>
           </footer>
