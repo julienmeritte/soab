@@ -3,7 +3,7 @@ import "./App.scss";
 import Axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./components/feature/home-page/HomePage";
-import Navbar from "./components/core/header/Navbar";
+import Navbar from "./components/core/header/navbar/Navbar";
 import Register from "./components/feature/auth-pages/register-page/Register";
 import Login from "./components/feature/auth-pages/login-page/Login";
 import { Provider } from "react-redux";
@@ -12,6 +12,7 @@ import Alert from "./components/shared/alerts/alerts";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import Game from "./components/feature/game-page/game";
+import Header from "./components/core/header/Header";
 
 
 if (localStorage.token) {
@@ -27,29 +28,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <header>
-            <Navbar />
-            <div className={'logo'}>
-              <img src="./soab_logo.png" />
-            </div>
-            <div className={'redirection'}>
-              <form className={'btn'} action={"/"} component={HomePage}>
-                <button>Home</button>
-              </form>
-              <form className={'btn'} action={"/login"} component={Login}>
-                <button>Login</button>
-              </form>
-              <form className={'btn'} action={"/register"} component={Register}>
-                <button>Register</button>
-              </form>
-              <form className={'btn'} action={"/game"} component={Game}>
-                <button>Game</button>
-              </form>
-              <form className={'btn'} action={"/auth/google"}>
-                <button>Connect with Google.</button>
-              </form>
-            </div>
-          </header>
+          <Header/>
           <Route exact path="/" component={HomePage}></Route>
           <Alert></Alert>
           <Suspense fallback={<div>Loading... </div>}>
