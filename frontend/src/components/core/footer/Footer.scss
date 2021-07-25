@@ -1,0 +1,22 @@
+@import "src/assets/main";
+
+footer {
+  bottom: 0;
+  height: 70px;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  clear: both;
+  position: relative;
+  margin-top: auto;
+  font-family: Roboto-Soab, sans-serif;
+
+  .footer-content {
+    color: $black;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+  }
+}
