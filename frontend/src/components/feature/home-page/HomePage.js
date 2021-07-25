@@ -4,7 +4,7 @@ import './HomePage.scss';
 
 function HomePage() {
   return (
-    <div className="App">
+    <div className={'home-page'}>
       <h1>Frontend SOAB - HOME PAGE</h1>
       <div>Contenu de la page d'accueil.</div>
     </div>

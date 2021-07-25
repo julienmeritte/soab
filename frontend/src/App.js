@@ -13,6 +13,7 @@ import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import Game from "./components/feature/game-page/game";
 import Header from "./components/core/header/Header";
+import Footer from "./components/core/footer/Footer";
 
 
 if (localStorage.token) {
@@ -25,26 +26,25 @@ const App = () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Router>
-        <Fragment>
-          <Header/>
-          <Route exact path="/" component={HomePage}></Route>
-          <Alert></Alert>
-          <Suspense fallback={<div>Loading... </div>}>
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/game" component={Game} />
-          </Switch>
-          </Suspense>
-
-          <footer>
-            <h1>Ici c'est le footer !</h1>
-          </footer>
-        </Fragment>
-      </Router>
-    </Provider>
+        <Provider store={store}>
+          <Router>
+            <Fragment>
+              <Header/>
+                <div className={'main'}>
+                    <Route exact path="/" component={HomePage}></Route>
+                    <Alert></Alert>
+                    <Suspense fallback={<div>Loading... </div>}>
+                        <Switch>
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/register" component={Register} />
+                            <Route exact path="/game" component={Game} />
+                        </Switch>
+                    </Suspense>
+                </div>
+              <Footer/>
+            </Fragment>
+          </Router>
+        </Provider>
   );
 };
 

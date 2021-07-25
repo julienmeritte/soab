@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+@import "assets/main";
 
 @mixin alert-color($color) {
   background-color: $color;
@@ -34,4 +32,15 @@ nav {
 footer {
   text-align: center;
   margin: 20px 0;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  padding: 40px 0;
+  margin: 0 140px;
+  color: inherit;
+  min-height: calc(100vh - 102px - 70px);
+  background-color: $white;
 }
