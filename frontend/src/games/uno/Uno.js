@@ -12,13 +12,10 @@ export default function Uno() {
 
     const cards = [];
 
-    let i = 0;
-
-    for (const card of deck.cards) {
+    for (let i =0; i < deck.cards.length; i++) {
         cards.push(<Card
-            position={[card.positions.x, card.positions.y, card.positions.z]}
-            cardClick={cardOnClick} key={i} index={i} card={card} properties={properties}/>);
-        i++;
+            position={[deck.cards[i].positions.x, deck.cards[i].positions.y, deck.cards[i].positions.z]}
+            cardClick={cardOnClick} key={i} index={i} card={deck.cards[i]} properties={properties.properties}/>);
     }
 
     return (
