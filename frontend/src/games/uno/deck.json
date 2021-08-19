@@ -1,0 +1,26 @@
+{
+  "cards": [
+    {
+      "positions": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "cardType": "oui"
+    },
+    {
+      "positions": {
+        "x": 10,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "positions": {
+        "x": 20,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ]
+}

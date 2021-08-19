@@ -1,6 +1,5 @@
 import React, {Fragment, useState, useEffect, Suspense, lazy} from "react";
 import "./App.scss";
-import Axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./components/feature/home-page/HomePage";
 import Register from "./components/feature/auth-pages/register-page/Register";
