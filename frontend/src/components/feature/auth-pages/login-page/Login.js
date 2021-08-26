@@ -27,29 +27,32 @@ const Login = ({login, isAuthenticated}) => {
 
     return (
         <Fragment>
-            <div className={'Login'}>
-                <div className={'display'}>
-                    <h3 className={'formulaire'}>Connexion</h3>
-                    <form onSubmit={(e) => onSubmit(e)}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            name="email"
-                            value={email}
-                            onChange={(e) => onChange(e)}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Mot de passe"
-                            name="password"
-                            value={password}
-                            onChange={(e) => onChange(e)}
-                            required
-                            minLength="6"
-                        />
-                        <input className={'btn'} type="submit" value="Login"/>
-                    </form>
+            <div class="row">
+                <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Loging in </h3>
+                        <p>Fill in the data below.</p>
+                        <form class="requires-validation" onSubmit={(e) => onSubmit(e)}>
+                            <div class="col-md-12">
+                                <input class="form-control" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
+                                 <div class="valid-feedback">Email field is valid!</div>
+                                 <div class="invalid-feedback">Email field cannot be blank!</div>
+                          </div>
+
+
+                           <div class="col-md-12">
+                              <input class="form-control" type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
+                               <div class="valid-feedback">Password field is valid!</div>
+                               <div class="invalid-feedback">Password field cannot be blank!</div>
+                           </div>                  
+
+                            <div class="form-button mt-3">
+                                <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 </div>
             </div>
         </Fragment>
