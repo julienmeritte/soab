@@ -1,3 +1,20 @@
+
+.bg-img {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .form-holder {
       display: flex;
       flex-direction: column;
@@ -70,7 +87,6 @@
     border: 0;
     outline: 0;
     border-radius: 6px;
-    background-color: #fff;
     font-size: 15px;
     font-weight: 300;
     color: #8D8D8D;

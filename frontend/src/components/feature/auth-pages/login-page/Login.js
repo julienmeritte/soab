@@ -27,12 +27,19 @@ const Login = ({login, isAuthenticated}) => {
 
     return (
         <Fragment>
-            <div class="row">
+            <img className={'bg-img'} src="./back.webp"/>
+            <div class="test">
                 <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
                         <h3>Loging in </h3>
                         <p>Fill in the data below.</p>
+                        <div class="">
+                            <a class="text-center" href="/auth/google">
+                                <img src="./google_icon.png" width="25" height="25"/>
+                                <p>Connect With Google</p>
+                            </a>
+                        </div>
                         <form class="requires-validation" onSubmit={(e) => onSubmit(e)}>
                             <div class="col-md-12">
                                 <input class="form-control" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
