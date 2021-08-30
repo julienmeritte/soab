@@ -1,26 +1,14 @@
 {
   "cards": [
     {
-      "positions": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "cardType": "oui"
+      "cardType": "oui",
+      "image": "blue_0.png"
     },
     {
-      "positions": {
-        "x": 10,
-        "y": 0,
-        "z": 0.01
-      }
+      "image": "blue_1.png"
     },
     {
-      "positions": {
-        "x": 20,
-        "y": 0,
-        "z": 0.02
-      }
+      "image": "blue_2.png"
     }
   ]
 }
