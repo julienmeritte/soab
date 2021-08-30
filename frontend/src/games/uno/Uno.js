@@ -24,17 +24,14 @@ export default function Uno() {
     for (let i = 0; i < deck.cards.length; i++) {
         const textFront = `${process.env.PUBLIC_URL}/assets/images/uno/${deck.cards[i].image}`;
         cards.push(<Card
-            position={[deckPosition[0] + i * 1.6, deckPosition[1], deckPosition[2] + i * 0.01]}
+            position={[deckPosition[0], deckPosition[1], deckPosition[2] + i * 0.01]}
             texture={[textBack, textFront]}
             cardClick={cardOnClick} key={i} index={i} card={deck.cards[i]}
             properties={properties.properties}
-
         />);
     }
 
     shuffleCards();
-
-    console.log(cards);
 
     return (
         <Canvas camera={camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
@@ -46,7 +43,7 @@ export default function Uno() {
     );
 
     function cardOnClick(index) {
-        //cards[index].props.position[1] += 10;
+        //console.log(cards);
     }
 
     function shuffleCards() {

@@ -1,10 +1,7 @@
-import * as THREE from "three";
 import React, {useEffect, useRef, useState} from "react";
-import {useLoader} from "react-three-fiber";
-import {OrbitControls, useTexture} from "@react-three/drei";
-import {TextureLoader} from "three";
+import {useTexture} from "@react-three/drei";
+import {useFrame} from "@react-three/fiber";
 
-//import timeBombBackCard from '../../assets/images/mtg-back.png';
 
 function Card(props) {
 
@@ -15,9 +12,15 @@ function Card(props) {
     const backTexture = useTexture(props.texture[0]);
     const frontTexture = useTexture(props.texture[1]);
     const ref = useRef();
+
+    useFrame(() => {
+        updateSelf();
+    });
+
     return (
         <mesh position={props.position} onClick={click} ref={ref}>
-            <boxBufferGeometry attach="geometry" args={[props.properties.cardWidth, props.properties.cardHeight, 0.04]}/>
+            <boxBufferGeometry attach="geometry"
+                               args={[props.properties.cardWidth, props.properties.cardHeight, 0.04]}/>
             <meshStandardMaterial attachArray="material" map={backTexture}/>
             <meshStandardMaterial attachArray="material" map={backTexture}/>
             <meshStandardMaterial attachArray="material" map={backTexture}/>
@@ -30,9 +33,17 @@ function Card(props) {
     function click(e) {
         e.stopPropagation();
         props.cardClick(props.index);
+        rotateSelf180();
+    }
+
+    function updateSelf() {
+        ref.current.position.x = props.position[0];
         ref.current.position.y = props.position[1];
+        ref.current.position.z = props.position[2];
+    }
+
+    function rotateSelf180() {
         ref.current.rotation.y += Math.PI;
-        console.log(props.card)
     }
 }
 
