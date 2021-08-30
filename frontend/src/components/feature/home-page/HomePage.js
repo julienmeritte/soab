@@ -3,8 +3,12 @@ import "../../../config/app.url.json";
 import './HomePage.scss';
 
 function HomePage() {
+  let user = sessionStorage.getItem("name");
   return (
     <div className={'home-page'}>
+      <div class="d-flex  justify-content-center pb-5">
+        <h1 >Bonjour {user ? user : 'invité'}</h1>
+      </div>
       <div class="container">
         <div class="row">
           <div class="col-sm">

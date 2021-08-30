@@ -42,7 +42,6 @@ export const register =
 
     try {
       const res = await axios.post("/api/users/register", body, config);
-
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -51,7 +50,6 @@ export const register =
       dispatch(loadUser());
     } catch (err) {
       const errors = err.response.data.errors;
-
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
       }
@@ -68,15 +66,17 @@ export const login = (email, password) => async (dispatch) => {
     },
   };
   const body = JSON.stringify({ email, password });
-
+  
   try {
     const res = await axios.post("/auth", body, config);
-
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
-
+    sessionStorage.setItem("id" , res.data.id);
+    sessionStorage.setItem("name" , res.data.name);
+    sessionStorage.setItem("email" , res.data.email);
+    sessionStorage.setItem("token" , res.data.token);
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
@@ -91,5 +91,6 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
+  sessionStorage.clear();
   dispatch({ type: LOGOUT });
 };

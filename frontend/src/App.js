@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./components/feature/home-page/HomePage";
 import Register from "./components/feature/auth-pages/register-page/Register";
 import Login from "./components/feature/auth-pages/login-page/Login";
+import Profil from "./components/feature/profile-pages/Profil";
 import { Provider } from "react-redux";
 import store from "./service/store";
 import Alert from "./components/shared/alerts/alerts";
@@ -25,7 +26,7 @@ const App = () => {
 
   return (
         <Provider store={store}>
-          <Router>
+          <Router forceRefresh={true}>
             <Fragment>
               <Header/>
                 <div className={'main'}>
@@ -36,6 +37,7 @@ const App = () => {
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Register} />
                             <Route exact path="/game" component={Game} />
+                            <Route exact path="/profile" component={Profil} />
                         </Switch>
                     </Suspense>
                 </div>
