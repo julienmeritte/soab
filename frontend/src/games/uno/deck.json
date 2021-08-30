@@ -1,7 +1,6 @@
 {
   "cards": [
     {
-      "cardType": "oui",
       "image": "blue_0.png"
     },
     {
@@ -9,6 +8,153 @@
     },
     {
       "image": "blue_2.png"
+    },
+    {
+      "image": "blue_3.png"
+    },
+    {
+      "image": "blue_4.png"
+    },
+    {
+      "image": "blue_5.png"
+    },
+    {
+      "image": "blue_6.png"
+    },
+    {
+      "image": "blue_7.png"
+    },
+    {
+      "image": "blue_8.png"
+    },
+    {
+      "image": "blue_9.png"
+    },
+    {
+      "image": "blue_picker.png"
+    },
+    {
+      "image": "blue_reverse.png"
+    },
+    {
+      "image": "blue_skip.png"
+    },
+    {
+      "image": "green_0.png"
+    },
+    {
+      "image": "green_1.png"
+    },
+    {
+      "image": "green_2.png"
+    },
+    {
+      "image": "green_3.png"
+    },
+    {
+      "image": "green_4.png"
+    },
+    {
+      "image": "green_5.png"
+    },
+    {
+      "image": "green_6.png"
+    },
+    {
+      "image": "green_7.png"
+    },
+    {
+      "image": "green_8.png"
+    },
+    {
+      "image": "green_9.png"
+    },
+    {
+      "image": "green_picker.png"
+    },
+    {
+      "image": "green_reverse.png"
+    },
+    {
+      "image": "green_skip.png"
+    },
+    {
+      "image": "red_0.png"
+    },
+    {
+      "image": "red_1.png"
+    },
+    {
+      "image": "red_2.png"
+    },
+    {
+      "image": "red_3.png"
+    },
+    {
+      "image": "red_4.png"
+    },
+    {
+      "image": "red_5.png"
+    },
+    {
+      "image": "red_6.png"
+    },
+    {
+      "image": "red_7.png"
+    },
+    {
+      "image": "red_8.png"
+    },
+    {
+      "image": "red_9.png"
+    },
+    {
+      "image": "red_picker.png"
+    },
+    {
+      "image": "red_reverse.png"
+    },
+    {
+      "image": "red_skip.png"
+    },
+    {
+      "image": "yellow_0.png"
+    },
+    {
+      "image": "yellow_1.png"
+    },
+    {
+      "image": "yellow_2.png"
+    },
+    {
+      "image": "yellow_3.png"
+    },
+    {
+      "image": "yellow_4.png"
+    },
+    {
+      "image": "yellow_5.png"
+    },
+    {
+      "image": "yellow_6.png"
+    },
+    {
+      "image": "yellow_7.png"
+    },
+    {
+      "image": "yellow_8.png"
+    },
+    {
+      "image": "yellow_9.png"
+    },
+    {
+      "image": "yellow_picker.png"
+    },
+    {
+      "image": "yellow_reverse.png"
+    },
+    {
+      "image": "yellow_skip.png"
     }
   ]
 }

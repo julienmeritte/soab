@@ -2,18 +2,15 @@ import Card from "../components/Card";
 import Board from "../components/Board";
 import {Canvas, useLoader, useThree} from "@react-three/fiber";
 import React, {useState} from "react";
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import deck from "./deck.json";
 import properties from "./properties.json";
-import {useGesture} from "@use-gesture/react";
-//import textBack from "../../assets/images/uno/card_back.png";
-//import cardTextures from "../../assets/images/uno"
-
-import * as THREE from "three";
-import {Vector3} from "three";
-import {useTexture} from "@react-three/drei";
 
 export default function Uno() {
+
+    // DEBUT Mocks SocketIO
+    const players = [1,2];
+    //FIN Mocks SocketIO
+
 
     // Constantes ThreeJS
     const camera = {fov: 75, position: [0, 0, 65]}
@@ -34,6 +31,8 @@ export default function Uno() {
 
         />);
     }
+
+    console.log(cards);
 
     return (
         <Canvas camera={camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
