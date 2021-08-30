@@ -13,8 +13,17 @@ function Card(props) {
     const frontTexture = useTexture(props.texture[1]);
     const ref = useRef();
 
+    const [shouldRotate, setShouldRotate] = useState(props.shouldRotate);
+    const [rotateState, setRotateState] = useState(props.rotateState);
+    const [zAxis, setZAxis] = useState(props.position[2]);
+
     useFrame(() => {
+        if (props.position[2] === -12) {
+            setShouldRotate(true);
+            props.position[2] = zAxis;
+        }
         updateSelf();
+        animationRotateSelf180();
     });
 
     return (
@@ -33,7 +42,8 @@ function Card(props) {
     function click(e) {
         e.stopPropagation();
         props.cardClick(props.index);
-        rotateSelf180();
+        //rotateSelf180();
+        //setShouldRotate(true);
     }
 
     function updateSelf() {
@@ -43,7 +53,51 @@ function Card(props) {
     }
 
     function rotateSelf180() {
-        ref.current.rotation.y += Math.PI;
+        if (ref.current.rotation.y === 0) {
+            ref.current.rotation.y += Math.PI;
+        } else {
+            ref.current.rotation.y = 0;
+        }
+    }
+
+    function animationRotateSelf180() {
+        if (shouldRotate) {
+            if (rotateState === 0) {
+                if (ref.current.rotation.y === 0) {
+                    setZAxis(props.position[2]);
+                }
+                if (ref.current.rotation.y < Math.PI) {
+                    if (ref.current.rotation.y < Math.PI / 2) {
+                        props.position[2] += 0.5;
+                    } else {
+                        props.position[2] -= 0.5;
+                    }
+                    ref.current.rotation.y += 0.05;
+                } else {
+                    ref.current.rotation.y = Math.PI;
+                    props.position[2] = zAxis;
+                    setShouldRotate(false);
+                    setRotateState(1)
+                }
+            } else if (rotateState === 1) {
+                if (ref.current.rotation.y === Math.PI) {
+                    setZAxis(props.position[2]);
+                }
+                if (ref.current.rotation.y > 0) {
+                    if (ref.current.rotation.y > Math.PI / 2) {
+                        props.position[2] += 0.5;
+                    } else {
+                        props.position[2] -= 0.5;
+                    }
+                    ref.current.rotation.y -= 0.05;
+                } else {
+                    ref.current.rotation.y = 0;
+                    props.position[2] = zAxis;
+                    setShouldRotate(false);
+                    setRotateState(0)
+                }
+            }
+        }
     }
 }
 
