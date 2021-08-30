@@ -8,7 +8,7 @@ import properties from "./properties.json";
 export default function Uno() {
 
     // DEBUT Mocks SocketIO
-    const players = [1,2];
+    const players = [1, 2];
     //FIN Mocks SocketIO
 
 
@@ -17,20 +17,22 @@ export default function Uno() {
     const cards = [];
 
     // Constantes Jeu
-    const deckPosition = [-30, 0, 0];
+    const deckPosition = [-40, 0, 0];
     const textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
 
     // Initialisation Deck
     for (let i = 0; i < deck.cards.length; i++) {
         const textFront = `${process.env.PUBLIC_URL}/assets/images/uno/${deck.cards[i].image}`;
         cards.push(<Card
-            position={[deckPosition[0], deckPosition[1], deckPosition[2] + i * 0.01]}
+            position={[deckPosition[0] + i * 1.6, deckPosition[1], deckPosition[2] + i * 0.01]}
             texture={[textBack, textFront]}
             cardClick={cardOnClick} key={i} index={i} card={deck.cards[i]}
             properties={properties.properties}
 
         />);
     }
+
+    shuffleCards();
 
     console.log(cards);
 
@@ -45,5 +47,19 @@ export default function Uno() {
 
     function cardOnClick(index) {
         //cards[index].props.position[1] += 10;
+    }
+
+    function shuffleCards() {
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = cards[i];
+            cards[i] = cards[j];
+            cards[j] = temp;
+        }
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].props.position[0] = deckPosition[0] + i * 1.6;
+            cards[i].props.position[1] = deckPosition[1];
+            cards[i].props.position[2] = deckPosition[2] + i * 0.01;
+        }
     }
 }
