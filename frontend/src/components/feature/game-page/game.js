@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {set, useForm} from "react-hook-form"
 import "../../../config/app.url.json";
 import "./game.scss";
@@ -19,7 +19,7 @@ function Game() {
     const [game, setGame] = useState(GAMES_ENUM.UNO);
     const allReady = false;
 
-    const listPlayer = [];
+    const [listPlayer, setListPlayer] = useState([]);
 
     const currentGame = [];
 
@@ -41,18 +41,20 @@ function Game() {
         socket.emit('createPlayer', {name: data.name, room: data.room});
         socket.on('getPlayer', (value) => {
             player = value;
-            listPlayer.push(player);
         })
     };
 
 
     setInterval(() => {
         if (roomCreated) {
-            //
+            socket.emit('getAllPlayersByRoom', {room: player.room});
+            socket.on('givePlayersByRoom', (value) => {
+                setListPlayer(value);
+            });
         }
         console.log('player: ', player);
         console.log('listPlayer: ', listPlayer);
-    }, 3000);
+    }, 1000);
 
     /*const sendMsgSubmit = data => {
         socket.emit('sendMessage', {msg: data.text, room: player.room, name: player.name});
@@ -83,12 +85,7 @@ function Game() {
                 ) : (
                     <div/>
                 )}
-
                 <div>
-                    {listPlayer}
-                </div>
-                <div>
-                    {item}
                 </div>
                 {allReady ? currentGame : (
                     <div/>

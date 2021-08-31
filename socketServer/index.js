@@ -76,6 +76,11 @@ io.on('connection', (socket) => {
 
     socket.on("disconnect", () => {
         clientRepo.deleteBySocketID(socket.id);
+        console.log(clientRepo.findAll());
+    });
+
+    socket.on('getAllPlayersByRoom' , (data) => {
+        socket.emit('givePlayersByRoom' , clientRepo.findByRoom(data.room));
     });
 })
 
