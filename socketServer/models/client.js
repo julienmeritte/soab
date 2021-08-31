@@ -5,12 +5,19 @@ module.exports = class client {
         this.socketID = null;
         this.room = null;
         this.ready = false;
+        this.creator = false;
     }
     getReady() {
         return this.ready;
     }
     setReady(ready) {
         this.ready = ready;
+    }
+    getCreator() {
+        return this.creator;
+    }
+    setCreator(creator) {
+        this.creator = creator;
     }
     getName() {
         return this.name;

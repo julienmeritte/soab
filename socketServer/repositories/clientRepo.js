@@ -18,43 +18,52 @@ module.exports = class ClientRepository{
     findByName(name){
         let array = [];
         for (let index = 0; index < this.clients.length; index++) {
-            if (this.msgs[index].name == name )
-                array.push(this.msgs[index]);
+            if (this.clients[index].name == name )
+                array.push(this.clients[index]);
         }
         return array;
     }
     findBySocketId(socketId){
         let array = [];
         for (let index = 0; index < this.clients.length; index++) {
-            if (this.msgs[index].socketId == socketId )
-                array.push(this.msgs[index]);
+            if (this.clients[index].socketId == socketId )
+                array.push(this.clients[index]);
         }
         return array;
     }    
     findByCode(code){
         let array = [];
         for (let index = 0; index < this.clients.length; index++) {
-            if (this.msgs[index].code == code )
-                array.push(this.msgs[index]);
+            if (this.clients[index].code == code )
+                array.push(this.clients[index]);
         }
         return array;
     }
     findByReady(ready){
         let array = [];
         for (let index = 0; index < this.clients.length; index++) {
-            if (this.msgs[index].ready == ready )
-                array.push(this.msgs[index]);
+            if (this.clients[index].ready == ready )
+                array.push(this.clients[index]);
         }
         return array;
     }
     findByRoom(room){
         let array = [];
         for (let index = 0; index < this.clients.length; index++) {
-            if (this.msgs[index].room == room )
-                array.push(this.msgs[index]);
+            if (this.clients[index].room == room )
+                array.push(this.clients[index]);
         }
         return array;
     }
+    setReady(code) {
+        for(let index = 0; index < this.clients.length; index++) {
+            if (this.clients[index].code == code) {
+                this.clients[index].setReady(true);
+            }
+        }
+    }
+
+
     count(){
         return this.clients.length;
     }
