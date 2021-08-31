@@ -26,13 +26,14 @@ io.on('connection', (socket) => {
         client.setName(data.name);
         client.setRoom(data.room);
         client.setSocket(socket.id);
-        if (clientRepo.findByRoom(data.room).length == 0) {
-            client.setCreator(false);
-        }
-        else {
+        if (clientRepo.findByRoom(data.room).length === 0) {
             client.setCreator(true);
         }
+        else {
+            client.setCreator(false);
+        }
         clientRepo.insert(client);
+        console.log(client);
         socket.emit('getPlayer' , {name : client.getName() , socketID : client.getSocket() , room : client.getRoom() , code : client.getCode() , creator : client.getCreator()})
     });
 

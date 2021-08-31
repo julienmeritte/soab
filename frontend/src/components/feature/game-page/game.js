@@ -17,12 +17,13 @@ function Game() {
     const [msgCount, setMsgCount] = useState([]);
     const {register, handleSubmit} = useForm();
     const [game, setGame] = useState(GAMES_ENUM.UNO);
+    const allReady = false;
 
     const currentGame = [];
 
     showCurrentGame();
 
-    setInterval(() => {
+    /*setInterval(() => {
         if (player != null) {
             socket.emit('getAllMessage', (player.room));
             socket.on('getAllMessageReturn', (data) => {
@@ -32,19 +33,20 @@ function Game() {
             });
             console.log(item);
         }
-    }, 5000);
+    }, 5000);*/
     const createPlayerSubmit = data => {
         if (createPlayer == 0) {
             createPlayer = 1;
             socket.emit('createPlayer', {name: data.name, room: data.room});
             socket.on('getPlayer', (value) => {
                 setPlayer(value);
+                console.log(value)
             })
         }
     };
-    const sendMsgSubmit = data => {
+    /*const sendMsgSubmit = data => {
         socket.emit('sendMessage', {msg: data.text, room: player.room, name: player.name});
-    };
+    };*/
 
     function showCurrentGame() {
         switch (game) {
@@ -63,18 +65,16 @@ function Game() {
         <div>
             <div className="chat-main">
                 <form onSubmit={handleSubmit(createPlayerSubmit)}>
-                    <input {...register("name")} placeholder="your msg"/>
-                    <input {...register("room")} placeholder="your msg"/>
-                    <input type="submit"/>
-                </form>
-                <form onSubmit={handleSubmit(sendMsgSubmit)}>
-                    <input {...register("text")} placeholder="your msg"/>
+                    <input {...register("name")} placeholder="name"/>
+                    <input {...register("room")} placeholder="room name"/>
                     <input type="submit"/>
                 </form>
                 <div>
                     {item}
                 </div>
-                {currentGame}
+                {allReady ? currentGame : (
+                    <div/>
+                )}
             </div>
 
         </div>
