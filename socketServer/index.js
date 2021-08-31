@@ -33,7 +33,6 @@ io.on('connection', (socket) => {
             client.setCreator(false);
         }
         clientRepo.insert(client);
-        console.log(client);
         socket.emit('getPlayer' , {name : client.getName() , socketID : client.getSocket() , room : client.getRoom() , code : client.getCode() , creator : client.getCreator()})
     });
 
@@ -56,7 +55,7 @@ io.on('connection', (socket) => {
                 break;
             }
         }
-        socket.emit('return-allReady' , {ready: check});
+        socket.emit('return-allReady' , {room: data.room , ready: check});
     });
 
     socket.on('getAllPlayer' , (data) => {
@@ -73,6 +72,10 @@ io.on('connection', (socket) => {
     
     socket.on('getAllMessage' , (data) => {
         socket.emit('getAllMessageReturn' , msgRepo.findByRoom(data));
+    });
+
+    socket.on("disconnect", () => {
+        clientRepo.deleteBySocketID(socket.id);
     });
 })
 

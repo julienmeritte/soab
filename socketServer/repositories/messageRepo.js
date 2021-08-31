@@ -18,7 +18,7 @@ module.exports = class msgRepository{
     findByName(name){
         let array = [];
         for (let index = 0; index < this.msgs.length; index++) {
-            if (this.msgs[index].name == name )
+            if (this.msgs[index].getName() == name )
                 array.push(this.msgs[index]);
         }
         return array;
@@ -26,7 +26,7 @@ module.exports = class msgRepository{
     findByText(text){
         let array = [];
         for (let index = 0; index < this.msgs.length; index++) {
-            if (this.msgs[index].text == text )
+            if (this.msgs[index].getText() == text )
                 array.push(this.msgs[index]);
         }
         return array;
@@ -34,7 +34,7 @@ module.exports = class msgRepository{
     findByRoom(room){
         let array = [];
         this.msgs.forEach(element => {
-            if (element.room == room) {
+            if (element.getRoom() == room) {
                 array.push(element);
             }
         });
