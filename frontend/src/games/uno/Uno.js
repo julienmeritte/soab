@@ -5,12 +5,14 @@ import React, {createRef, useRef, useState} from "react";
 import deck from "./deck.json";
 import properties from "./properties.json";
 import {set} from "react-hook-form";
+import {GAMES_ENUM} from "../../enums/games-enum";
 
 export default function Uno() {
 
     // DEBUT Mocks SocketIO
     const players = [1, 2];
     const currentPlayer = 1;
+
     //FIN Mocks SocketIO
 
 
@@ -21,8 +23,10 @@ export default function Uno() {
     const cardPlayerTwo = [];
 
     // Constantes Jeu
+    const currentGame = GAMES_ENUM.UNO;
     const deckPosition = [-30, 0, 0];
     const textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
+    const textBoard = `${process.env.PUBLIC_URL}/assets/images/uno/uno_board.png`;
 
     // Initialisation Deck
 
@@ -41,15 +45,6 @@ export default function Uno() {
 
     setupGameStart();
 
-    return (
-        <Canvas camera={camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
-            <ambientLight intensity={0.5}/>
-            <spotLight position={[10, 15, 10]} angle="0.3"/>
-            <Board/>
-            {cards}
-        </Canvas>
-    );
-
     function setupGameStart() {
         shuffleCards();
         setTimeout(() => {
@@ -63,20 +58,20 @@ export default function Uno() {
             setTimeout(() => {
                 if (i % 2 === 0) {
                     cardPlayerOne.push(cards[cards.length - 1]);
-                    cardPlayerOne[i / 2].props.position[1] = -30;
-                    cardPlayerOne[i / 2].props.position[0] += 20 + 5 * i;
+                    cardPlayerOne[i / 2].props.position[1] = -32.5;
+                    cardPlayerOne[i / 2].props.position[0] += 12 + 5 * i;
                     if (currentPlayer === 1) {
                         cardPlayerOne[i / 2].props.position[2] = -12;
                     }
-                    console.log('player1Deck: ', cardPlayerOne);
+                    // console.log('player1Deck: ', cardPlayerOne);
                 } else if (i % 2 === 1) {
                     cardPlayerTwo.push(cards[cards.length - 1]);
-                    cardPlayerTwo[parseInt(i / 2)].props.position[1] = 30;
-                    cardPlayerTwo[parseInt(i / 2)].props.position[0] += 20 + 5 * (i - 1);
+                    cardPlayerTwo[parseInt(i / 2)].props.position[1] = 32.5;
+                    cardPlayerTwo[parseInt(i / 2)].props.position[0] += 12 + 5 * (i - 1);
                     if (currentPlayer === 2) {
                         cardPlayerTwo[parseInt(i / 2)].props.position[2] = -12;
                     }
-                    console.log('player2Deck: ', cardPlayerTwo);
+                    // console.log('player2Deck: ', cardPlayerTwo);
                 }
                 cards.splice(cards.length - 1, 1);
             }, 200 * i);
@@ -84,6 +79,7 @@ export default function Uno() {
     }
 
     function cardOnClick(index) {
+        // Can be played ?
     }
 
     function shuffleCards() {
@@ -99,4 +95,12 @@ export default function Uno() {
             cards[i].props.position[2] = deckPosition[2] + i * 0.01;
         }
     }
+
+    return (
+        <Canvas camera={camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
+            <ambientLight intensity={0.6}/>
+            <Board texture={textBoard}/>
+            {cards}
+        </Canvas>
+    );
 }

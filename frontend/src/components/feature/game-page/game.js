@@ -4,6 +4,7 @@ import "../../../config/app.url.json";
 import "./game.scss";
 import openSocket from 'socket.io-client';
 import Uno from "../../../games/uno/Uno";
+import {GAMES_ENUM} from "../../../enums/games-enum";
 
 const socket = openSocket('http://localhost:3002');
 
@@ -15,6 +16,11 @@ function Game() {
     const [item, setItem] = useState([]);
     const [msgCount, setMsgCount] = useState([]);
     const {register, handleSubmit} = useForm();
+    const [game, setGame] = useState(GAMES_ENUM.UNO);
+
+    const currentGame = [];
+
+    showCurrentGame();
 
     setInterval(() => {
         if (player != null) {
@@ -40,6 +46,18 @@ function Game() {
         socket.emit('sendMessage', {msg: data.text, room: player.room, name: player.name});
     };
 
+    function showCurrentGame() {
+        switch (game) {
+            case GAMES_ENUM.UNO:
+                currentGame.push(
+                    <div className="game-scene">
+                        <Uno/>
+                    </div>)
+            default:
+                currentGame.push(<div/>)
+        }
+    }
+
 
     return (
         <div>
@@ -56,10 +74,9 @@ function Game() {
                 <div>
                     {item}
                 </div>
+                {currentGame}
             </div>
-            <div className="game-scene">
-                <Uno/>
-            </div>
+
         </div>
 
     );
