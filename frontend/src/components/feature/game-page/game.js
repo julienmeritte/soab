@@ -9,15 +9,17 @@ import {GAMES_ENUM} from "../../../enums/games-enum";
 const socket = openSocket('http://localhost:3002');
 
 function Game() {
-    let createPlayer = 0;
+    let roomCreated = false;
     let sendMsg = 0;
-    const [player, setPlayer] = useState();
+    let player;
     const [msg, setMsg] = useState([]);
     const [item, setItem] = useState([]);
     const [msgCount, setMsgCount] = useState([]);
     const {register, handleSubmit} = useForm();
     const [game, setGame] = useState(GAMES_ENUM.UNO);
     const allReady = false;
+
+    const listPlayer = [];
 
     const currentGame = [];
 
@@ -35,15 +37,23 @@ function Game() {
         }
     }, 5000);*/
     const createPlayerSubmit = data => {
-        if (createPlayer == 0) {
-            createPlayer = 1;
-            socket.emit('createPlayer', {name: data.name, room: data.room});
-            socket.on('getPlayer', (value) => {
-                setPlayer(value);
-                console.log(value)
-            })
-        }
+        roomCreated = true;
+        socket.emit('createPlayer', {name: data.name, room: data.room});
+        socket.on('getPlayer', (value) => {
+            player = value;
+            listPlayer.push(player);
+        })
     };
+
+
+    setInterval(() => {
+        if (roomCreated) {
+            //
+        }
+        console.log('player: ', player);
+        console.log('listPlayer: ', listPlayer);
+    }, 3000);
+
     /*const sendMsgSubmit = data => {
         socket.emit('sendMessage', {msg: data.text, room: player.room, name: player.name});
     };*/
@@ -64,11 +74,19 @@ function Game() {
     return (
         <div>
             <div className="chat-main">
-                <form onSubmit={handleSubmit(createPlayerSubmit)}>
-                    <input {...register("name")} placeholder="name"/>
-                    <input {...register("room")} placeholder="room name"/>
-                    <input type="submit"/>
-                </form>
+                {!roomCreated ? (
+                    <form onSubmit={handleSubmit(createPlayerSubmit)}>
+                        <input {...register("name")} placeholder="name"/>
+                        <input {...register("room")} placeholder="room name"/>
+                        <input type="submit"/>
+                    </form>
+                ) : (
+                    <div/>
+                )}
+
+                <div>
+                    {listPlayer}
+                </div>
                 <div>
                     {item}
                 </div>
