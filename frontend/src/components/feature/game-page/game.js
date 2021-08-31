@@ -49,7 +49,10 @@ function Game() {
     function showCurrentGame() {
         switch (game) {
             case GAMES_ENUM.UNO:
-                currentGame.push(<Uno/>)
+                currentGame.push(
+                    <div className="game-scene">
+                        <Uno/>
+                    </div>)
             default:
                 currentGame.push(<div/>)
         }
@@ -71,10 +74,9 @@ function Game() {
                 <div>
                     {item}
                 </div>
-            </div>
-            <div className="game-scene">
                 {currentGame}
             </div>
+
         </div>
 
     );
