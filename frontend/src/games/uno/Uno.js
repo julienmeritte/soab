@@ -12,6 +12,7 @@ class Uno extends React.Component {
     constructor(props) {
         super(props);
 
+
         // DEBUT Mocks SocketIO
         this.players = [1, 2];
         this.currentPlayer = 1;
@@ -32,15 +33,20 @@ class Uno extends React.Component {
         this.textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
         this.textBoard = `${process.env.PUBLIC_URL}/assets/images/uno/uno_board.png`;
 
+        // Constantes Joueur
+        this.canPlay = false;
+
         // Initialisation Deck
 
         this.state = {
-            cards: this.initCards()
+            cards: this.initCards(),
         }
 
         console.log('Before deck: ', this.state.cards);
+    }
 
-
+    componentDidMount() {
+        this.canPlay = true;
     }
 
     initCards() {
@@ -70,13 +76,15 @@ class Uno extends React.Component {
 
     cardOnClick = (index, e) => {
         e.stopPropagation();
-        let cards = [...this.state.cards];
-        let card = {...this.state.cards[index]};
-        card.rotation[1] -= Math.PI;
-        cards[index] = card;
-        this.setState({cards});
-        console.log('click', index);
-        console.log('x', card);
+        if (this.canPlay) {
+            let cards = [...this.state.cards];
+            let card = {...this.state.cards[index]};
+            card.rotation[1] -= Math.PI;
+            cards[index] = card;
+            this.setState({cards});
+            console.log('click', index);
+            console.log('x', card);
+        }
     }
 
     render() {
