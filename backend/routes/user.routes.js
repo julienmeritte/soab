@@ -25,15 +25,14 @@ router.put("/update" , [
         });
     }
     const {googleId , name , email , password} = req.body;
-
+    console.log(googleId);
     try {
-        let user = await User.findOne({googleId})
+        let user = await User.findById(googleId)
         if (user) {
-            user.name = req.query.name;
-            user.email = req.query.email;
+            user.name = name;
+            user.email = email;
             const salt = await bcrypt.genSalt(10);
-
-            user.password = await bcrypt.hash(req.query.password, salt);
+            user.password = await bcrypt.hash(password, salt);
             await user.save();
         }
         else {
