@@ -26,8 +26,8 @@ class GamePage extends React.Component {
 
     componentDidMount() {
         setInterval(() => {
-            if (this.roomCreated) {
-                socket.emit('getAllPlayersByRoom', {room: this.player.room});
+            if (this.state.roomCreated) {
+                socket.emit('getAllPlayersByRoom', {room: this.state.player.room});
                 socket.on('givePlayersByRoom', (value) => {
                     this.setState({
                         listPlayer: value,
