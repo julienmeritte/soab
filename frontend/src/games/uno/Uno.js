@@ -6,37 +6,57 @@ import deck from "./deck.json";
 import properties from "./properties.json";
 import {set} from "react-hook-form";
 import {GAMES_ENUM} from "../../enums/games-enum";
+import * as THREE from "three";
+
+class ActionButton extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.image = new THREE.TextureLoader().load(props.image);
+    }
+
+    render() {
+        return (
+            <mesh position={[this.props.position[0], this.props.position[1], this.props.position[2]]}
+                  onClick={(e) => {
+                      this.props.cardClick(this.props.index, e);
+                  }}
+            >
+                <boxBufferGeometry attach="geometry"
+                                   args={[this.props.buttonSize[0], this.props.buttonSize[1], 0.04]}/>
+                <meshStandardMaterial attach="material" map={this.image}/>
+            </mesh>
+        );
+    }
+}
+
 
 class Uno extends React.Component {
 
     constructor(props) {
         super(props);
 
+        this.BUTTON_SPRITE = {
+            DISTRIB_ALL: `${process.env.PUBLIC_URL}/assets/images/uno/uno_button1.png`,
+            DRAW_ONE: `${process.env.PUBLIC_URL}/assets/images/uno/uno_button2.png`,
+            REORDER: `${process.env.PUBLIC_URL}/assets/images/uno/uno_button3.png`
+        }
 
-        // DEBUT Mocks SocketIO
         this.players = [1, 2];
         this.currentPlayer = 1;
 
-        //FIN Mocks SocketIO
-
-
-        // Constantes ThreeJS
         this.camera = {fov: 75, position: [0, 0, 65]}
 
         this.cardPlayerOne = [];
         this.cardPlayerTwo = [];
 
-        // Constantes Jeu
         this.cards = [];
         this.currentGame = GAMES_ENUM.UNO;
         this.deckPosition = [-30, 0, 0];
         this.textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
         this.textBoard = `${process.env.PUBLIC_URL}/assets/images/uno/uno_board.png`;
 
-        // Constantes Joueur
         this.canPlay = false;
-
-        // Initialisation Deck
 
         this.state = {
             cards: this.initCards(),
@@ -50,15 +70,21 @@ class Uno extends React.Component {
     }
 
     initCards() {
-        const cards = [];
+        let cards = [];
         for (let i = 0; i < deck.cards.length; i++) {
             cards.push({
                 index: i,
                 position: [this.deckPosition[0], this.deckPosition[1], this.deckPosition[2] + i * 0.01],
                 rotation: [0, 0, 0],
-                image: `${process.env.PUBLIC_URL}/assets/images/uno/${deck.cards[i].image}`
+                image: `${process.env.PUBLIC_URL}/assets/images/uno/${deck.cards[i].image}`,
+                owner: 0
             });
         }
+        cards = this.shuffleCards(cards);
+        return cards;
+    }
+
+    shuffleCards(cards) {
         for (let i = cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             const temp = cards[i];
@@ -82,41 +108,67 @@ class Uno extends React.Component {
             card.rotation[1] -= Math.PI;
             cards[index] = card;
             this.setState({cards});
-            console.log('click', index);
-            console.log('x', card);
+            console.log(card);
         }
     }
 
-    render() {
-        return (
-            <Canvas camera={this.camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
-                <ambientLight intensity={0.6}/>
-                <Board texture={this.textBoard}/>
-                {/*{this.cards}*/}
-                {this.state.cards.map((card) => <Card
-                    position={card.position}
-                    rotation={card.rotation}
-                    texture={[this.textBack, card.image]}
-                    cardClick={this.cardOnClick} key={card.index} index={card.index}
-                    properties={properties.properties}
-                />)}
-            </Canvas>
-        );
+    buttonOnClick = (index, e) => {
+        e.stopPropagation();
+        switch (index) {
+            case 0:
+                console.log('Click button distribution cartes');
+                break;
+            case 1:
+                console.log('Click button piocher carte');
+                this.drawOneCard();
+                break;
+            case 2:
+                console.log('Click button trier cartes');
+                this.reorderCards()
+                break;
+            default:
+                console.log('Click button failed');
+                break;
+        }
+
     }
 
+    drawOneCard() {
+        let cards = [...this.state.cards];
+        let indexToGet = 0;
+        for (let i = this.state.cards.length - 1; i > 0; i--) {
+            if (this.state.cards[i].owner === 0) {
+                indexToGet = i;
+                break;
+            }
+        }
+        let card = {...this.state.cards[indexToGet]};
+        card.position[0] += 10;
+        card.position[1] -= 32;
+        card.rotation[1] = Math.PI;
+        card.owner = this.currentPlayer;
+        cards[indexToGet] = card;
+        this.setState({cards});
+    }
 
-    //setupGameStart();
+    reorderCards() {
+        let playerCards = [];
+        let enemyCards = [];
+        let cards = [...this.state.cards];
+        for (let card of cards) {
+            if (card.owner === 1) {
+                playerCards.push(card.index);
+            }
+        }
+        for (let i = 0; i < playerCards.length; i++) {
+            cards[playerCards[i]].position[0] = -20 + i * 6;
+            cards[playerCards[i]].position[3] = 0.01 * i;
+        }
+        this.setState({cards});
+        console.log(playerCards);
+    }
 
-    /*function setupGameStart() {
-        shuffleCards();
-        setTimeout(() => {
-            distributeCardsToPlayer();
-        }, 1000);
-
-    }*/
-
-
-    /*function distributeCardsToPlayer() {
+    /*distributeCardsToPlayer() {
         for (let i = 0; i < 10; i++) {
             setTimeout(() => {
                 if (i % 2 === 0) {
@@ -139,6 +191,39 @@ class Uno extends React.Component {
                 cards.splice(cards.length - 1, 1);
             }, 200 * i);
         }
+    }*/
+
+    render() {
+        return (
+            <Canvas camera={this.camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
+                <ambientLight intensity={0.6}/>
+                <Board texture={this.textBoard}/>
+                {this.state.cards.map((card) => <Card
+                    position={card.position}
+                    rotation={card.rotation}
+                    texture={[this.textBack, card.image]}
+                    cardClick={this.cardOnClick} key={card.index} index={card.index}
+                    properties={properties.properties}
+                />)}
+                <ActionButton position={[40, 3, 0]} cardClick={this.buttonOnClick} rotation={[0, 0, 0]}
+                              buttonSize={[14, 6, 0.04]} image={this.BUTTON_SPRITE.REORDER} index={2}/>
+                <ActionButton position={[40, -3.5, 0]} cardClick={this.buttonOnClick} rotation={[0, 0, 0]}
+                              buttonSize={[14, 6, 0.04]} image={this.BUTTON_SPRITE.DRAW_ONE} index={1}/>
+                <ActionButton position={[40, -10, 0]} cardClick={this.buttonOnClick} rotation={[0, 0, 0]}
+                              buttonSize={[14, 6, 0.04]} image={this.BUTTON_SPRITE.DISTRIB_ALL} index={0}/>
+            </Canvas>
+        );
+    }
+
+
+    //setupGameStart();
+
+    /*function setupGameStart() {
+        shuffleCards();
+        setTimeout(() => {
+            distributeCardsToPlayer();
+        }, 1000);
+
     }*/
 
 

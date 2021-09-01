@@ -19,7 +19,7 @@ class GamePage extends React.Component {
             roomCreated: false,
             player: {},
             game: GAMES_ENUM.UNO,
-            allReady: false,
+            allReady: true,
             listPlayer: [],
             name: "",
             room: "",
@@ -43,7 +43,7 @@ class GamePage extends React.Component {
                         ready = false;
                     }
                 }
-                if (!this.state.allReady && this.state.listPlayer.length > 0 && ready) {
+                if (!this.state.allReady && !this.checkArrayEmpty(this.state.listPlayer) && ready) {
                     this.setState({
                         allReady: true
                     });
@@ -61,6 +61,13 @@ class GamePage extends React.Component {
 
     handleRoomChange = (event) => {
         this.setState({room: event.target.value});
+    }
+
+    checkArrayEmpty(array) {
+        if (typeof array != "undefined" && array != null && array.length != null && array.length > 0) {
+            return true
+        }
+        return false;
     }
 
     handlePlayerSubmit = (event) => {
