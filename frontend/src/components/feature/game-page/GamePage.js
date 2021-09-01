@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import {set, useForm} from "react-hook-form"
 import "../../../config/app.url.json";
-import "./game.scss";
+import "./GamePage.scss";
 import openSocket from 'socket.io-client';
 import Uno from "../../../games/uno/Uno";
 import {GAMES_ENUM} from "../../../enums/games-enum";
@@ -13,9 +13,11 @@ class GamePage extends React.Component {
     constructor(props) {
         super(props)
 
-        this.currentGame = [<div className={'game-scene'}>
-            <Uno/>
-        </div>];
+        this.currentGame = [
+            <div className={'game-scene'}>
+                <Uno/>
+            </div>
+        ];
 
         this.state = {
             roomCreated: false,
@@ -65,8 +67,8 @@ class GamePage extends React.Component {
         })
     };
 
-    render () {
-        const { roomCreated , allReady , name , room  , player} = this.state;
+    render() {
+        const {roomCreated, allReady, name, room, player} = this.state;
         return (
             <div>
                 <div className="chat-main">
@@ -89,12 +91,6 @@ class GamePage extends React.Component {
         )
     }
 }
-
-
-
-
-
-
 
 
 export default GamePage;

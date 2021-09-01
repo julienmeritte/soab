@@ -10,7 +10,7 @@ import store from "./service/store";
 import Alert from "./components/shared/alerts/alerts";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
-import Game from "./components/feature/game-page/game";
+import Game from "./components/feature/game-page/GamePage";
 import Header from "./components/core/header/Header";
 import Footer from "./components/core/footer/Footer";
 
