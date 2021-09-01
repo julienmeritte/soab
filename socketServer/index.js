@@ -6,8 +6,6 @@ const ClientRepo = require('./repositories/clientRepo');
 const Msg = require('./models/message');
 const MsgRepo = require('./repositories/messageRepo');
 
-
-
 server = app.listen(3002)
 
 const io = socketIO(server , {
