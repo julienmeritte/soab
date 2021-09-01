@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import {login} from "../../../../actions/auth";
 import './Login.scss';
 
+
 const Login = ({login, isAuthenticated}) => {
     const [formData, setFormData] = useState({
         email: "",

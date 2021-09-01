@@ -8,94 +8,89 @@ import {GAMES_ENUM} from "../../../enums/games-enum";
 
 const socket = openSocket('http://localhost:3002');
 
-function Game() {
-    let roomCreated = false;
-    let sendMsg = 0;
-    let player;
-    const [msg, setMsg] = useState([]);
-    const [item, setItem] = useState([]);
-    const [msgCount, setMsgCount] = useState([]);
-    const {register, handleSubmit} = useForm();
-    const [game, setGame] = useState(GAMES_ENUM.UNO);
-    const allReady = false;
 
-    const [listPlayer, setListPlayer] = useState([]);
-
-    const currentGame = [];
-
-    showCurrentGame();
-
-    /*setInterval(() => {
-        if (player != null) {
-            socket.emit('getAllMessage', (player.room));
-            socket.on('getAllMessageReturn', (data) => {
-                data.forEach(element => {
-                    item.push("<p>" + element.text + "</p>");
-                });
-            });
-            console.log(item);
-        }
-    }, 5000);*/
-    const createPlayerSubmit = data => {
-        roomCreated = true;
-        socket.emit('createPlayer', {name: data.name, room: data.room});
-        socket.on('getPlayer', (value) => {
-            player = value;
-        })
-    };
-
-
-    setInterval(() => {
-        if (roomCreated) {
-            socket.emit('getAllPlayersByRoom', {room: player.room});
-            socket.on('givePlayersByRoom', (value) => {
-                setListPlayer(value);
-            });
-        }
-        console.log('player: ', player);
-        console.log('listPlayer: ', listPlayer);
-    }, 1000);
-
-    /*const sendMsgSubmit = data => {
-        socket.emit('sendMessage', {msg: data.text, room: player.room, name: player.name});
-    };*/
-
-    function showCurrentGame() {
-        switch (game) {
-            case GAMES_ENUM.UNO:
-                currentGame.push(
-                    <div className="game-scene">
-                        <Uno/>
-                    </div>)
-            default:
-                currentGame.push(<div/>)
+class GamePage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            roomCreated: false,
+            player: {},
+            game: GAMES_ENUM.UNO,
+            allReady: false,
+            currentGame: [],
+            listPlayer: [],
+            name: "",
+            room: "",
         }
     }
 
+    componentDidMount() {
+        setInterval(() => {
+            if (this.roomCreated) {
+                socket.emit('getAllPlayersByRoom', {room: this.player.room});
+                socket.on('givePlayersByRoom', (value) => {
+                    this.setState({
+                        listPlayer: value,
+                    })
+                });
+            }
+            console.log('player: ', this.state.player);
+            console.log('listPlayer: ', this.state.listPlayer);
+        }, 1000);
+    }
 
-    return (
-        <div>
-            <div className="chat-main">
-                {!roomCreated ? (
-                    <form onSubmit={handleSubmit(createPlayerSubmit)}>
-                        <input {...register("name")} placeholder="name"/>
-                        <input {...register("room")} placeholder="room name"/>
-                        <input type="submit"/>
-                    </form>
-                ) : (
-                    <div/>
-                )}
-                <div>
+
+    handleNameChange = (event) => {
+        this.setState({name: event.target.value});
+    }
+
+    handleRoomChange = (event) => {
+        this.setState({room: event.target.value});
+    }
+
+    handlePlayerSubmit = (event) => {
+        event.preventDefault();
+        this.setState({
+            roomCreated: true,
+        })
+        socket.emit('createPlayer', {name: this.state.name, room: this.state.room});
+        socket.on('getPlayer', (value) => {
+            this.setState({
+                player: value,
+            })
+        })
+    };
+
+    render () {
+        const { roomCreated , allReady , currentGame , name , room  , player} = this.state;
+        return (
+            <div>
+                <div className="chat-main">
+                    {!roomCreated ? (
+                        <form onSubmit={this.handlePlayerSubmit}>
+                            <input type="text" onChange={this.handleNameChange} value={name} placeholder="name"/>
+                            <input type="text" onChange={this.handleRoomChange} value={room} placeholder="room name"/>
+                            <input type="submit"/>
+                        </form>
+                    ) : (
+                        <div/>
+                    )}
+                    <div>
+                    </div>
+                    {allReady ? currentGame : (
+                        <div/>
+                    )}
                 </div>
-                {allReady ? currentGame : (
-                    <div/>
-                )}
             </div>
-
-        </div>
-
-    );
+        )
+    }
 }
 
 
-export default Game;
+
+
+
+
+
+
+export default GamePage;
