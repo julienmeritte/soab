@@ -35,7 +35,7 @@ class Uno extends React.Component {
         // Initialisation Deck
 
         this.state = {
-            cards: this.setupCards()
+            cards: this.initCards()
         }
 
         console.log('Before deck: ', this.state.cards);
@@ -43,23 +43,29 @@ class Uno extends React.Component {
 
     }
 
-    setupCards() {
-        const temp = [];
+    initCards() {
+        const cards = [];
         for (let i = 0; i < deck.cards.length; i++) {
-            temp.push({
+            cards.push({
                 index: i,
-                position: [this.deckPosition[0] + i * 1.2, this.deckPosition[1], this.deckPosition[2] + i * 0.01],
+                position: [this.deckPosition[0], this.deckPosition[1], this.deckPosition[2] + i * 0.01],
                 rotation: [0, 0, 0],
                 image: `${process.env.PUBLIC_URL}/assets/images/uno/${deck.cards[i].image}`
             });
-            /*this.cards.push(<Card
-                position={[this.state.x /!*+ i * 1.2*!/, this.deckPosition[1], this.deckPosition[2] + i * 0.01]}
-                texture={[this.textBack, textFront]}
-                cardClick={this.cardOnClick} key={i} index={i}
-                properties={properties.properties}
-            />);*/
         }
-        return temp;
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = cards[i];
+            cards[i] = cards[j];
+            cards[j] = temp;
+        }
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].index = i;
+            cards[i].position[0] = this.deckPosition[0];
+            cards[i].position[1] = this.deckPosition[1];
+            cards[i].position[2] = this.deckPosition[2] + i * 0.01;
+        }
+        return cards;
     }
 
     cardOnClick = (index, e) => {
