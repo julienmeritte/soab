@@ -1,58 +1,71 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useTexture} from "@react-three/drei";
 import {useFrame} from "@react-three/fiber";
+import * as THREE from "three";
 
+class Card extends React.Component {
 
-function Card(props) {
+    constructor(props) {
+        super(props);
+        this.backTexture = new THREE.TextureLoader().load(props.texture[0]);
+        this.frontTexture = new THREE.TextureLoader().load(props.texture[1]);
+    }
+
+    componentDidMount() {
+        //setInterval(() => console.log(this.props.test), 500);
+    }
+
 
     /***
      * ENFANT utilise une ref de lui-même pour s'automodifier.
      * On fait écouter la ref sur les props pour chopper des infos du parent en temps réel.
      */
-    const backTexture = useTexture(props.texture[0]);
-    const frontTexture = useTexture(props.texture[1]);
-    const ref = useRef();
 
-    const [shouldRotate, setShouldRotate] = useState(props.shouldRotate);
-    const [rotateState, setRotateState] = useState(props.rotateState);
-    const [zAxis, setZAxis] = useState(props.position[2]);
 
-    useFrame(() => {
+    /*useFrame(() => {
         if (props.position[2] === -12) {
             setShouldRotate(true);
             props.position[2] = zAxis;
         }
         updateSelf();
         animationRotateSelf180();
-    });
+    });*/
 
-    return (
-        <mesh position={props.position} onClick={click} ref={ref}>
-            <boxBufferGeometry attach="geometry"
-                               args={[props.properties.cardWidth, props.properties.cardHeight, 0.04]}/>
-            <meshStandardMaterial attachArray="material" map={backTexture}/>
-            <meshStandardMaterial attachArray="material" map={backTexture}/>
-            <meshStandardMaterial attachArray="material" map={backTexture}/>
-            <meshStandardMaterial attachArray="material" map={backTexture}/>
-            <meshStandardMaterial attachArray="material" map={backTexture}/>
-            <meshStandardMaterial attachArray="material" map={frontTexture}/>
-        </mesh>
-    );
+    render() {
 
-    function click(e) {
+        return (
+            <mesh position={[this.props.position[0], this.props.position[1], this.props.position[2]]}
+                  onClick={(e) => {
+                      this.props.cardClick(this.props.index, e)
+                  }}
+                  rotation={[this.props.rotation[0], this.props.rotation[1], this.props.rotation[2]]}
+            >
+                <boxBufferGeometry attach="geometry"
+                                   args={[this.props.properties.cardWidth, this.props.properties.cardHeight, 0.04]}/>
+                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
+                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
+                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
+                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
+                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
+                <meshStandardMaterial attachArray="material" map={this.frontTexture}/>
+            </mesh>
+        );
+    }
+
+    /*click(e) {
         e.stopPropagation();
         props.cardClick(props.index);
         //rotateSelf180();
         //setShouldRotate(true);
     }
 
-    function updateSelf() {
+    updateSelf() {
         ref.current.position.x = props.position[0];
         ref.current.position.y = props.position[1];
         ref.current.position.z = props.position[2];
     }
 
-    function rotateSelf180() {
+    rotateSelf180() {
         if (ref.current.rotation.y === 0) {
             ref.current.rotation.y += Math.PI;
         } else {
@@ -60,7 +73,7 @@ function Card(props) {
         }
     }
 
-    function animationRotateSelf180() {
+    animationRotateSelf180() {
         if (shouldRotate) {
             if (rotateState === 0) {
                 if (ref.current.rotation.y === 0) {
@@ -98,7 +111,7 @@ function Card(props) {
                 }
             }
         }
-    }
+    }*/
 }
 
 export default Card;

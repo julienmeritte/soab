@@ -29,34 +29,34 @@ const Login = ({login, isAuthenticated}) => {
     return (
         <Fragment>
             <img className={'bg-img'} src="./back.webp"/>
-            <div class="test">
-                <div class="form-holder">
-                <div class="form-content">
-                    <div class="form-items">
+            <div className={'test'}>
+                <div className={'form-holder'}>
+                <div className={'form-content'}>
+                    <div className={'form-items'}>
                         <h3>Loging in </h3>
                         <p>Fill in the data below.</p>
-                        <div class="">
-                            <a class="text-center" href="/auth/google">
+                        <div className={''}>
+                            <a className={'text-center'} href="/auth/google">
                                 <img src="./google_icon.png" width="25" height="25"/>
                                 <p>Connect With Google</p>
                             </a>
                         </div>
-                        <form class="requires-validation" onSubmit={(e) => onSubmit(e)}>
-                            <div class="col-md-12">
-                                <input class="form-control" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
-                                 <div class="valid-feedback">Email field is valid!</div>
-                                 <div class="invalid-feedback">Email field cannot be blank!</div>
+                        <form className={'requires-validation'} onSubmit={(e) => onSubmit(e)}>
+                            <div className={'cold-md-12'}>
+                                <input className={'form-control'} type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
+                                 <div className={'valid-feedback'}>Email field is valid!</div>
+                                 <div className={'invalid-feedback'}>Email field cannot be blank!</div>
                           </div>
 
 
-                           <div class="col-md-12">
-                              <input class="form-control" type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
-                               <div class="valid-feedback">Password field is valid!</div>
-                               <div class="invalid-feedback">Password field cannot be blank!</div>
-                           </div>                  
+                           <div className={'col-md-12'}>
+                              <input className={'form-control'} type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
+                               <div className={'valid-feedback'}>Password field is valid!</div>
+                               <div className={'invalid-feedback'}>Password field cannot be blank!</div>
+                           </div>
 
-                            <div class="form-button mt-3">
-                                <button id="submit" type="submit" class="btn btn-primary">Login</button>
+                            <div className={'form-button mt-3'}>
+                                <button id="submit" type="submit" className={'btn btn-primary'}>Login</button>
                             </div>
                         </form>
                     </div>

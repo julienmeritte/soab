@@ -6,8 +6,6 @@ const ClientRepo = require('./repositories/clientRepo');
 const Msg = require('./models/message');
 const MsgRepo = require('./repositories/messageRepo');
 
-
-
 server = app.listen(3002)
 
 const io = socketIO(server , {
@@ -40,10 +38,10 @@ io.on('connection', (socket) => {
         socket.emit('return-submitData' , {room : info.room , code : info.code , data : info.data});
     });
 
-    socket.on('ChangeToReady' , (data) => {
+    socket.on('setPlayerReady' , (data) => {
         clientRepo.setReady(data.code);
         let user = clientRepo.findByCode(data.code);
-        socket.emit('return-ready' , {name : user[0].getName() , socketID : user[0].getSocket() , room : user[0].getRoom() , code : user[0].getCode() , creator : user[0].getCreator() , ready : user[0].getReady()});
+        //socket.emit('return-ready' , {name : user[0].getName() , socketID : user[0].getSocket() , room : user[0].getRoom() , code : user[0].getCode() , creator : user[0].getCreator() , ready : user[0].getReady()});
     });
 
     socket.on('GetAllReady' , (data) => {
@@ -80,7 +78,9 @@ io.on('connection', (socket) => {
     });
 
     socket.on('getAllPlayersByRoom' , (data) => {
-        socket.emit('givePlayersByRoom' , clientRepo.findByRoom(data.room));
+        socket.emit('givePlayersByRoom' , {
+            players: clientRepo.findByRoom(data.room)
+        });
     });
 })
 
