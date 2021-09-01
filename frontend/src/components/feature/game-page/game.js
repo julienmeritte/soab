@@ -12,12 +12,16 @@ const socket = openSocket('http://localhost:3002');
 class GamePage extends React.Component {
     constructor(props) {
         super(props)
+
+        this.currentGame = [<div className={'game-scene'}>
+            <Uno/>
+        </div>];
+
         this.state = {
             roomCreated: false,
             player: {},
             game: GAMES_ENUM.UNO,
-            allReady: false,
-            currentGame: [],
+            allReady: true,
             listPlayer: [],
             name: "",
             room: "",
@@ -62,7 +66,7 @@ class GamePage extends React.Component {
     };
 
     render () {
-        const { roomCreated , allReady , currentGame , name , room  , player} = this.state;
+        const { roomCreated , allReady , name , room  , player} = this.state;
         return (
             <div>
                 <div className="chat-main">
@@ -77,7 +81,7 @@ class GamePage extends React.Component {
                     )}
                     <div>
                     </div>
-                    {allReady ? currentGame : (
+                    {allReady ? this.currentGame : (
                         <div/>
                     )}
                 </div>
