@@ -2,12 +2,13 @@ import React, {useState, useEffect, useRef} from "react";
 import {set, useForm} from "react-hook-form"
 import "../../../config/app.url.json";
 import "./GamePage.scss";
-import openSocket, { io } from 'socket.io-client';
+import openSocket, {io} from 'socket.io-client';
 import Uno from "../../../games/uno/Uno";
 import {GAMES_ENUM} from "../../../enums/games-enum";
 import Card from "../../../games/components/Card";
 import properties from "../../../games/uno/properties.json";
 import Chat from "../../../games/components/Chat";
+import deck from "../../../games/uno/deck.json";
 
 const socket = openSocket('http://localhost:3002');
 
@@ -24,6 +25,10 @@ class GamePage extends React.Component {
             listPlayer: [],
             name: "test",
             room: "oui",
+            changes: '',
+            canPlay: false,
+            playerNumber: -1,
+            cards: []
             listMessages: [],
         }
     }
@@ -40,15 +45,24 @@ class GamePage extends React.Component {
                     });
                 });
                 var ready = true;
-                for(const player of this.state.listPlayer) {
+                for (const player of this.state.listPlayer) {
                     if (player.ready === false) {
                         ready = false;
                     }
                 }
                 if (!this.state.allReady && this.checkArrayEmpty(this.state.listPlayer) && ready) {
+                    for (let i = 0; i < this.state.listPlayer.length; i++) {
+                        if (this.state.listPlayer[i].code === this.state.player.code) {
+                            this.setState({
+                                playerNumber: i
+                            });
+                        }
+                    }
                     this.setState({
-                        allReady: true
+                        allReady: true,
+                        canPlay: this.state.player.creator
                     });
+                    console.log("START", this.state.playerNumber);
                 }
             }
         }, 1000);
@@ -105,19 +119,56 @@ class GamePage extends React.Component {
         });
     }
 
-    sendFromChild = () => {
-        console.log(this.state.player);
+    sendFromChild = (cards) => {
         socket.emit('setHand', {
-            socketID: this.state.player.socketID,
-            test: 'oui'
+            code: this.state.player.code,
+            cards: cards
         });
-        socket.on('getCards', (value) => {
-            console.log('getCards reçu : ', value.message);
-        })
+    }
+
+    refreshCardsFromChild = () => {
+        let creator;
+        for (let player of this.state.listPlayer) {
+            if (player.creator) {
+                creator = player;
+                break;
+            }
+        }
+        if (creator) {
+            socket.emit('getCardsFromCreator', {
+                code: creator.code
+            }, (response) => {
+                console.log('cards from response:', response);
+                this.setState({
+                    //canPlay: false
+                    cards: response
+                });
+            });
+        }
+
+        //console.log(creator);
+    }
+
+    initCardsFromChild = () => {
+            let cards = [];
+            for (let i = 0; i < deck.cards.length; i++) {
+                cards.push({
+                    index: i,
+                    position: [this.deckPosition[0], this.deckPosition[1], this.deckPosition[2] + i * 0.01],
+                    rotation: [0, 0, 0],
+                    image: this.textureLoader.load(`${process.env.PUBLIC_URL}/assets/images/uno/${deck.cards[i].image}`),
+                    owner: -1,
+                    type: deck.cards[i].type,
+                    color: deck.cards[i].color,
+                    number: deck.cards[i].number
+                });
+            }
+            cards = this.shuffleCards(cards);
+            return cards;
     }
 
     render() {
-        const {roomCreated, allReady, name, room, player} = this.state;
+        const {roomCreated, allReady, name, room, player, canPlay, cards, changes, playerNumber} = this.state;
         return (
             <div>
                 <div className="chat-main">
@@ -133,16 +184,26 @@ class GamePage extends React.Component {
 
                     {allReady ? (
                             <div className={'game-scene'}>
-                                <Uno sendFromChild={this.sendFromChild}/>
+                                <Uno playerNumber={playerNumber}
+                                     sendFromChild={this.sendFromChild}
+                                     refreshCardsFromChild={this.refreshCardsFromChild}
+                                     canPlay={canPlay}
+                                     changes={changes}
+                                     cards={cards}
+                                />
                             </div>
                         )
                         : (
                             <div>
                                 <button className={'game-button-ready'} onClick={this.setPlayerReady}>Prêt</button>
-                                {this.state.listPlayer.map((player) => <div>
-                                        {player.name} : {player.ready ? (<span>Prêt</span>) : (<span>Pas prêt</span>)}
-                                    </div>
-                                )}<br/>
+                                {
+                                    this.state.listPlayer.map((player) =>
+                                        <div>
+                                            {player.name} : {player.ready ? (<span>Prêt</span>) : (
+                                            <span>Pas prêt</span>)}
+                                        </div>
+                                    )
+                                }<br/>
                                 Tous les joueurs ne sont pas prêts.
                             </div>
                         )}

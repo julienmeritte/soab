@@ -9,6 +9,7 @@ import {GAMES_ENUM, CARD_COLOR, CARD_TYPE} from "../../enums/games-enum";
 import * as THREE from "three";
 
 class ActionButton extends React.Component {
+
     constructor(props) {
         super(props);
         this.image = new THREE.TextureLoader().load(props.image);
@@ -19,8 +20,7 @@ class ActionButton extends React.Component {
             <mesh position={[this.props.position[0], this.props.position[1], this.props.position[2]]}
                   onClick={(e) => {
                       this.props.cardClick(this.props.index, e);
-                  }}
-            >
+                  }}>
                 <boxBufferGeometry attach="geometry"
                                    args={[this.props.buttonSize[0], this.props.buttonSize[1], 0.04]}/>
                 <meshStandardMaterial attach="material" map={this.image}/>
@@ -42,14 +42,13 @@ class Uno extends React.Component {
         }
 
         this.players = [1, 2];
-        this.currentPlayer = 1;
+        this.currentPlayer = this.props.playerNumber;
 
         this.camera = {fov: 75, position: [0, 0, 65]}
 
         this.cardPlayerOne = [];
         this.cardPlayerTwo = [];
 
-        this.cards = [];
         this.currentGame = GAMES_ENUM.UNO;
         this.deckPosition = [-30, 0, 0];
         this.textureLoader = new THREE.TextureLoader();
@@ -58,11 +57,12 @@ class Uno extends React.Component {
 
         this.backTexture = this.textureLoader.load(this.textBack);
 
+        this.cards = this.initCards();
 
-        this.canPlay = false;
+        console.log('init cards parent', this.props.cards);
 
         this.state = {
-            cards: this.initCards(),
+            cards:  this.cards,
             blankTexture: this.textureLoader.load(this.textBack)
         }
 
@@ -70,25 +70,17 @@ class Uno extends React.Component {
     }
 
     componentDidMount() {
-        this.canPlay = true;
-    }
-
-    initCards() {
-        let cards = [];
-        for (let i = 0; i < deck.cards.length; i++) {
-            cards.push({
-                index: i,
-                position: [this.deckPosition[0], this.deckPosition[1], this.deckPosition[2] + i * 0.01],
-                rotation: [0, 0, 0],
-                image: this.textureLoader.load(`${process.env.PUBLIC_URL}/assets/images/uno/${deck.cards[i].image}`),
-                owner: 0,
-                type: deck.cards[i].type,
-                color: deck.cards[i].color,
-                number: deck.cards[i].number
-            });
-        }
-        cards = this.shuffleCards(cards);
-        return cards;
+        setInterval(() => {
+            this.props.refreshCardsFromChild();
+            /*if (!this.props.canPlay) {
+                console.log('exists', this.props.cards);
+                this.setState({
+                    cards: this.props.cards
+                })
+            } else {
+                console.log('dont exists', this.props.cards);
+            }*/
+        }, 1000);
     }
 
     shuffleCards(cards) {
@@ -109,20 +101,20 @@ class Uno extends React.Component {
 
     cardOnClick = (index, type, e) => {
         e.stopPropagation();
-        if (this.canPlay && type !== CARD_TYPE.BLANK) {
+        if (this.props.canPlay && type !== CARD_TYPE.BLANK) {
             let cards = [...this.state.cards];
             let card = {...this.state.cards[index]};
-            card.rotation[1] -= Math.PI;
+            //card.rotation[1] -= Math.PI;
             cards[index] = card;
             this.setState({cards});
-            console.log(card);
-            this.props.sendFromChild();
+            this.props.sendFromChild(cards);
+            console.log('CARDS FROM PARENT', this.props.cards);
         }
     }
 
     buttonOnClick = (index, e) => {
         e.stopPropagation();
-        if (this.canPlay) {
+        if (this.props.canPlay) {
             switch (index) {
                 case 0:
                     console.log('Click button distribution cartes');
@@ -147,7 +139,7 @@ class Uno extends React.Component {
         let cards = [...this.state.cards];
         let indexToGet = 0;
         for (let i = this.state.cards.length - 1; i > 0; i--) {
-            if (this.state.cards[i].owner === 0) {
+            if (this.state.cards[i].owner === -1) {
                 indexToGet = i;
                 break;
             }
@@ -159,6 +151,7 @@ class Uno extends React.Component {
         card.owner = this.currentPlayer;
         cards[indexToGet] = card;
         this.setState({cards});
+        this.props.sendFromChild(cards);
     }
 
     reorderCards = () => {
@@ -166,7 +159,7 @@ class Uno extends React.Component {
         let enemyCards = [];
         let cards = [...this.state.cards];
         for (let card of cards) {
-            if (card.owner === 1) {
+            if (card.owner === this.currentPlayer) {
                 playerCards.push(card.index);
             }
         }
@@ -214,7 +207,7 @@ class Uno extends React.Component {
             <Canvas camera={this.camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
                 <ambientLight intensity={0.6}/>
                 <Board texture={this.textBoard}/>
-                {this.state.cards.map((card) => <Card
+                {this.props.cards.map((card) => <Card
                     position={card.position}
                     rotation={card.rotation}
                     texture={[this.backTexture, card.image]}
@@ -227,8 +220,8 @@ class Uno extends React.Component {
                     number={card.number}
                 />)}
                 <Card
-                    position={[-42,-33,0]}
-                    rotation={[0,0,0]}
+                    position={[-42, -32.5, 0]}
+                    rotation={[0, 0, 0]}
                     texture={[this.state.blankTexture, this.state.blankTexture]}
                     properties={properties.properties}
                     cardClick={this.cardOnClick}
