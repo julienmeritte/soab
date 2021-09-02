@@ -11,7 +11,6 @@ import * as THREE from "three";
 class ActionButton extends React.Component {
     constructor(props) {
         super(props);
-
         this.image = new THREE.TextureLoader().load(props.image);
     }
 
@@ -117,6 +116,7 @@ class Uno extends React.Component {
             cards[index] = card;
             this.setState({cards});
             console.log(card);
+            this.props.sendFromChild();
         }
     }
 

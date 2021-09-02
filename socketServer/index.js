@@ -82,6 +82,17 @@ io.on('connection', (socket) => {
             players: clientRepo.findByRoom(data.room)
         });
     });
+
+    // SOCKET JEU
+    socket.on('setHand' , (data) => {
+        console.log(data.test);
+        socket.to(data.socketID).emit('getCards' , {
+            message: data.test + ' hum le caca c bon'
+        });
+    });
+
+
+
 })
 
 

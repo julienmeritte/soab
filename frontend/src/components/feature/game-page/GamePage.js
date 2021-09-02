@@ -19,10 +19,10 @@ class GamePage extends React.Component {
             roomCreated: false,
             player: {},
             game: sessionStorage.getItem("gameEnum"),
-            allReady: true,
+            allReady: false,
             listPlayer: [],
-            name: "",
-            room: "",
+            name: "test",
+            room: "oui",
         }
     }
 
@@ -93,6 +93,17 @@ class GamePage extends React.Component {
         });
     }
 
+    sendFromChild = () => {
+        console.log(this.state.player);
+        socket.emit('setHand', {
+            socketID: this.state.player.socketID,
+            test: 'oui'
+        });
+        socket.on('getCards', (value) => {
+            console.log('getCards reçu : ', value.message);
+        })
+    }
+
     render() {
         const {roomCreated, allReady, name, room, player} = this.state;
         return (
@@ -110,7 +121,7 @@ class GamePage extends React.Component {
 
                     {allReady ? (
                             <div className={'game-scene'}>
-                                <Uno/>
+                                <Uno sendFromChild={this.sendFromChild}/>
                             </div>
                         )
                         : (
