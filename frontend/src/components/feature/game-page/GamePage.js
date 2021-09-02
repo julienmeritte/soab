@@ -18,7 +18,7 @@ class GamePage extends React.Component {
         this.state = {
             roomCreated: false,
             player: {},
-            game: GAMES_ENUM.UNO,
+            game: sessionStorage.getItem("gameEnum"),
             allReady: true,
             listPlayer: [],
             name: "",
