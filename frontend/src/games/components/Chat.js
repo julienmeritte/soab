@@ -4,32 +4,43 @@ import { TechnicolorShader } from "three-stdlib";
 class Chat extends React.Component {
     constructor(props) {
         super(props);
-        this.socket = props.socket;
         this.state = {
-            messages: ['test', 'deuxième test'],
+            listMsg: [{name : "Admin" , text: "Bienvenu" , room: ""}],
             text: '',
         }
     }
     
+    componentDidMount() {
+        
+        if(this.props.player != null) {
+            setInterval(() => {
+                this.props.onReceivedMsg();
+                if (this.props.listMessage != null) {
+                    this.setState({listMsg: this.props.listMessages})
+                }
+                
+            }, 1000);
+        }
+    }
+
+
     handleNameChange = (event) => {
         this.setState({text: event.target.value});
     }
 
     onSubmit = (event) => {
         event.preventDefault();
-        let messages = [...this.state.messages];
-        messages.push(this.state.text);
-        this.setState({messages});
+        this.props.onSendMsg(this.state.text);
     }
     
     render() {
-        const{message,text} = this.state;
+        const{ listMsg ,text} = this.state;
         return(
             <div>
                 <ul class="messages">
-                    {this.state.messages.map((message, i) => {                      
-                        return (<li>
-                            {message}
+                    {this.props.listMessages.map((data, i) => {                      
+                        return (<li key={i}>
+                            {data.name} : {data.text}
                         </li>)
                     })}
                 </ul>

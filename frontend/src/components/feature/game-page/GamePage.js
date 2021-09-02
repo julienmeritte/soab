@@ -24,6 +24,7 @@ class GamePage extends React.Component {
             listPlayer: [],
             name: "test",
             room: "oui",
+            listMessages: [],
         }
     }
 
@@ -50,8 +51,6 @@ class GamePage extends React.Component {
                     });
                 }
             }
-            /*console.log('listPlayer: ', this.state.listPlayer);
-            console.log('player: ', this.state.player);*/
         }, 1000);
     }
 
@@ -59,6 +58,18 @@ class GamePage extends React.Component {
     handleNameChange = (event) => {
         this.setState({name: event.target.value});
     }
+
+    onSendMsg = (text) => {
+        socket.emit('sendMessage' , {name: this.state.player.name , msg : text , room: this.state.player.room});
+    }
+
+    onReceivedMsg = () => {
+        socket.emit('getAllMessage' , {room: this.state.player.room});
+        socket.on('getAllMessageReturn' , (data) => {
+           this.setState({listMessages : data});
+        });
+    }
+
 
     handleRoomChange = (event) => {
         this.setState({room: event.target.value});
@@ -136,8 +147,8 @@ class GamePage extends React.Component {
                             </div>
                         )}
                 </div>
-                <div class="chat">
-                    <Chat socket={this.state.socket}/>
+                <div class="chat" key="chat">
+                    <Chat onSendMsg={this.onSendMsg} onReceivedMsg={this.onReceivedMsg} player={this.state.player} listMessages={this.state.listMessages}/>
                 </div>
             </div>
         )

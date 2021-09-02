@@ -69,13 +69,13 @@ io.on('connection', (socket) => {
     });
     
     socket.on('getAllMessage' , (data) => {
-        socket.emit('getAllMessageReturn' , msgRepo.findByRoom(data));
+        socket.emit('getAllMessageReturn' , msgRepo.findByRoom(data.room));
     });
 
-    socket.on("disconnect", () => {
+    /*socket.on("disconnect", () => {
         clientRepo.deleteBySocketID(socket.id);
         console.log(clientRepo.findAll());
-    });
+    });*/
 
     socket.on('getAllPlayersByRoom' , (data) => {
         socket.emit('givePlayersByRoom' , {
