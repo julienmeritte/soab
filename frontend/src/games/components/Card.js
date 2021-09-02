@@ -35,11 +35,8 @@ class Card extends React.Component {
     });*/
     onEnter(index, e) {
         e.stopPropagation();
-
         if (this.type !== CARD_TYPE.BLANK) {
             this.props.cardVisualize(this.props.texture[1])
-            console.log('enter in ', index);
-            console.log(this.color, this.number, this.type);
         }
     }
 

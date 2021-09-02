@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
 
     socket.on('setPlayerReady' , (data) => {
         clientRepo.setReady(data.code);
-        let user = clientRepo.findByCode(data.code);
+        //let user = clientRepo.findByCode(data.code);
         //socket.emit('return-ready' , {name : user[0].getName() , socketID : user[0].getSocket() , room : user[0].getRoom() , code : user[0].getCode() , creator : user[0].getCreator() , ready : user[0].getReady()});
     });
 
@@ -84,11 +84,13 @@ io.on('connection', (socket) => {
     });
 
     // SOCKET JEU
-    socket.on('setHand' , (data) => {
-        console.log(data.test);
-        socket.to(data.socketID).emit('getCards' , {
-            message: data.test + ' hum le caca c bon'
-        });
+    socket.on('setHand', (data) => {
+        clientRepo.setCards(data.cards, data.code);
+    });
+
+    socket.on('getCardsFromCreator', (data, callback) => {
+        let cards = clientRepo.getCards(data.code);
+        callback(cards);
     });
 
 

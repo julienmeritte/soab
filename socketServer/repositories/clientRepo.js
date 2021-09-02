@@ -32,12 +32,12 @@ module.exports = class ClientRepository{
         return array;
     }    
     findByCode(code){
-        let array = [];
-        for (let index = 0; index < this.clients.length; index++) {
-            if (this.clients[index].code == code )
-                array.push(this.clients[index]);
+        for (let client of this.clients) {
+            if (client.code === code) {
+                return client;
+            }
         }
-        return array;
+
     }
     findByReady(ready){
         let array = [];
@@ -84,5 +84,22 @@ module.exports = class ClientRepository{
     insert(client){
         this.clients.push(client);
         return client;
+    }
+
+    setCards(cards, code) {
+        for(let client of this.clients) {
+            if (client.code === code) {
+                client.setCards(cards);
+                break;
+            }
+        }
+    }
+
+    getCards(code) {
+        for(let client of this.clients) {
+            if (client.code === code) {
+                return client.getCards();
+            }
+        }
     }
 };
