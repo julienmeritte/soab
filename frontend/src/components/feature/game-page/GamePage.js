@@ -2,11 +2,12 @@ import React, {useState, useEffect, useRef} from "react";
 import {set, useForm} from "react-hook-form"
 import "../../../config/app.url.json";
 import "./GamePage.scss";
-import openSocket from 'socket.io-client';
+import openSocket, { io } from 'socket.io-client';
 import Uno from "../../../games/uno/Uno";
 import {GAMES_ENUM} from "../../../enums/games-enum";
 import Card from "../../../games/components/Card";
 import properties from "../../../games/uno/properties.json";
+import Chat from "../../../games/components/Chat";
 
 const socket = openSocket('http://localhost:3002');
 
@@ -134,6 +135,9 @@ class GamePage extends React.Component {
                                 Tous les joueurs ne sont pas prêts.
                             </div>
                         )}
+                </div>
+                <div class="chat">
+                    <Chat socket={this.state.socket}/>
                 </div>
             </div>
         )
