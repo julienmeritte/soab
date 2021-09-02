@@ -2,13 +2,16 @@ import React, {useEffect, useRef, useState} from "react";
 import {useTexture} from "@react-three/drei";
 import {useFrame} from "@react-three/fiber";
 import * as THREE from "three";
+import {CARD_TYPE} from "../../enums/games-enum";
 
 class Card extends React.Component {
 
     constructor(props) {
         super(props);
-        this.backTexture = new THREE.TextureLoader().load(props.texture[0]);
-        this.frontTexture = new THREE.TextureLoader().load(props.texture[1]);
+
+        this.color = props.color;
+        this.type = props.type;
+        this.number = props.number;
     }
 
     componentDidMount() {
@@ -30,24 +33,46 @@ class Card extends React.Component {
         updateSelf();
         animationRotateSelf180();
     });*/
+    onEnter(index, e) {
+        e.stopPropagation();
+
+        if (this.type !== CARD_TYPE.BLANK) {
+            this.props.cardVisualize(this.props.texture[1])
+            console.log('enter in ', index);
+            console.log(this.color, this.number, this.type);
+        }
+    }
+
+    onLeave(index, e) {
+        e.stopPropagation();
+        if (this.type !== CARD_TYPE.BLANK) {
+            this.props.cardVisualize(this.props.texture[0])
+        }
+    }
 
     render() {
 
         return (
             <mesh position={[this.props.position[0], this.props.position[1], this.props.position[2]]}
                   onClick={(e) => {
-                      this.props.cardClick(this.props.index, e)
+                      this.props.cardClick(this.props.index, this.props.type, e);
                   }}
                   rotation={[this.props.rotation[0], this.props.rotation[1], this.props.rotation[2]]}
+                  onPointerOver={(e) => {
+                      this.onEnter(this.props.index, e);
+                  }}
+                  onPointerOut={(e) => {
+                      this.onLeave(this.props.index, e);
+                  }}
             >
                 <boxBufferGeometry attach="geometry"
                                    args={[this.props.properties.cardWidth, this.props.properties.cardHeight, 0.04]}/>
-                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
-                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
-                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
-                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
-                <meshStandardMaterial attachArray="material" map={this.backTexture}/>
-                <meshStandardMaterial attachArray="material" map={this.frontTexture}/>
+                <meshStandardMaterial attachArray="material" map={this.props.texture[0]}/>
+                <meshStandardMaterial attachArray="material" map={this.props.texture[0]}/>
+                <meshStandardMaterial attachArray="material" map={this.props.texture[0]}/>
+                <meshStandardMaterial attachArray="material" map={this.props.texture[0]}/>
+                <meshStandardMaterial attachArray="material" map={this.props.texture[0]}/>
+                <meshStandardMaterial attachArray="material" map={this.props.texture[1]}/>
             </mesh>
         );
     }

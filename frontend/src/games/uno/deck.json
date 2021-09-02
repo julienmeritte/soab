@@ -1,160 +1,316 @@
 {
   "cards": [
     {
-      "image": "blue_0.png"
+      "image": "blue_0.png",
+      "type": "number",
+      "color": "blue",
+      "number": 0
     },
     {
-      "image": "blue_1.png"
+      "image": "blue_1.png",
+      "type": "number",
+      "color": "blue",
+      "number": 1
     },
     {
-      "image": "blue_2.png"
+      "image": "blue_2.png",
+      "type": "number",
+      "color": "blue",
+      "number": 2
     },
     {
-      "image": "blue_3.png"
+      "image": "blue_3.png",
+      "type": "number",
+      "color": "blue",
+      "number": 3
     },
     {
-      "image": "blue_4.png"
+      "image": "blue_4.png",
+      "type": "number",
+      "color": "blue",
+      "number": 4
     },
     {
-      "image": "blue_5.png"
+      "image": "blue_5.png",
+      "type": "number",
+      "color": "blue",
+      "number": 5
     },
     {
-      "image": "blue_6.png"
+      "image": "blue_6.png",
+      "type": "number",
+      "color": "blue",
+      "number": 6
     },
     {
-      "image": "blue_7.png"
+      "image": "blue_7.png",
+      "type": "number",
+      "color": "blue",
+      "number": 7
     },
     {
-      "image": "blue_8.png"
+      "image": "blue_8.png",
+      "type": "number",
+      "color": "blue",
+      "number": 8
     },
     {
-      "image": "blue_9.png"
+      "image": "blue_9.png",
+      "type": "number",
+      "color": "blue",
+      "number": 9
     },
     {
-      "image": "blue_picker.png"
+      "image": "blue_picker.png",
+      "type": "picker",
+      "color": "blue",
+      "number": -1
     },
     {
-      "image": "blue_reverse.png"
+      "image": "blue_reverse.png",
+      "type": "reverse",
+      "color": "blue",
+      "number": -1
     },
     {
-      "image": "blue_skip.png"
+      "image": "blue_skip.png",
+      "type": "skip",
+      "color": "blue",
+      "number": -1
     },
     {
-      "image": "green_0.png"
+      "image": "green_0.png",
+      "type": "number",
+      "color": "green",
+      "number": 0
     },
     {
-      "image": "green_1.png"
+      "image": "green_1.png",
+      "type": "number",
+      "color": "green",
+      "number": 1
     },
     {
-      "image": "green_2.png"
+      "image": "green_2.png",
+      "type": "number",
+      "color": "green",
+      "number": 2
     },
     {
-      "image": "green_3.png"
+      "image": "green_3.png",
+      "type": "number",
+      "color": "green",
+      "number": 3
     },
     {
-      "image": "green_4.png"
+      "image": "green_4.png",
+      "type": "number",
+      "color": "green",
+      "number": 4
     },
     {
-      "image": "green_5.png"
+      "image": "green_5.png",
+      "type": "number",
+      "color": "green",
+      "number": 5
     },
     {
-      "image": "green_6.png"
+      "image": "green_6.png",
+      "type": "number",
+      "color": "green",
+      "number": 6
     },
     {
-      "image": "green_7.png"
+      "image": "green_7.png",
+      "type": "number",
+      "color": "green",
+      "number": 7
     },
     {
-      "image": "green_8.png"
+      "image": "green_8.png",
+      "type": "number",
+      "color": "green",
+      "number": 8
     },
     {
-      "image": "green_9.png"
+      "image": "green_9.png",
+      "type": "number",
+      "color": "green",
+      "number": 9
     },
     {
-      "image": "green_picker.png"
+      "image": "green_picker.png",
+      "type": "picker",
+      "color": "green",
+      "number": -1
     },
     {
-      "image": "green_reverse.png"
+      "image": "green_reverse.png",
+      "type": "reverse",
+      "color": "green",
+      "number": -1
     },
     {
-      "image": "green_skip.png"
+      "image": "green_skip.png",
+      "type": "skip",
+      "color": "green",
+      "number": -1
     },
     {
-      "image": "red_0.png"
+      "image": "red_0.png",
+      "type": "number",
+      "color": "red",
+      "number": 0
     },
     {
-      "image": "red_1.png"
+      "image": "red_1.png",
+      "type": "number",
+      "color": "red",
+      "number": 1
     },
     {
-      "image": "red_2.png"
+      "image": "red_2.png",
+      "type": "number",
+      "color": "red",
+      "number": 2
     },
     {
-      "image": "red_3.png"
+      "image": "red_3.png",
+      "type": "number",
+      "color": "red",
+      "number": 3
     },
     {
-      "image": "red_4.png"
+      "image": "red_4.png",
+      "type": "number",
+      "color": "red",
+      "number": 4
     },
     {
-      "image": "red_5.png"
+      "image": "red_5.png",
+      "type": "number",
+      "color": "red",
+      "number": 5
     },
     {
-      "image": "red_6.png"
+      "image": "red_6.png",
+      "type": "number",
+      "color": "red",
+      "number": 6
     },
     {
-      "image": "red_7.png"
+      "image": "red_7.png",
+      "type": "number",
+      "color": "red",
+      "number": 7
     },
     {
-      "image": "red_8.png"
+      "image": "red_8.png",
+      "type": "number",
+      "color": "red",
+      "number": 8
     },
     {
-      "image": "red_9.png"
+      "image": "red_9.png",
+      "type": "number",
+      "color": "red",
+      "number": 9
     },
     {
-      "image": "red_picker.png"
+      "image": "red_picker.png",
+      "type": "picker",
+      "color": "red",
+      "number": -1
     },
     {
-      "image": "red_reverse.png"
+      "image": "red_reverse.png",
+      "type": "reverse",
+      "color": "red",
+      "number": -1
     },
     {
-      "image": "red_skip.png"
+      "image": "red_skip.png",
+      "type": "skip",
+      "color": "red",
+      "number": -1
     },
     {
-      "image": "yellow_0.png"
+      "image": "yellow_0.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 0
     },
     {
-      "image": "yellow_1.png"
+      "image": "yellow_1.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 1
     },
     {
-      "image": "yellow_2.png"
+      "image": "yellow_2.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 2
     },
     {
-      "image": "yellow_3.png"
+      "image": "yellow_3.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 3
     },
     {
-      "image": "yellow_4.png"
+      "image": "yellow_4.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 4
     },
     {
-      "image": "yellow_5.png"
+      "image": "yellow_5.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 5
     },
     {
-      "image": "yellow_6.png"
+      "image": "yellow_6.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 6
     },
     {
-      "image": "yellow_7.png"
+      "image": "yellow_7.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 7
     },
     {
-      "image": "yellow_8.png"
+      "image": "yellow_8.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 8
     },
     {
-      "image": "yellow_9.png"
+      "image": "yellow_9.png",
+      "type": "number",
+      "color": "yellow",
+      "number": 9
     },
     {
-      "image": "yellow_picker.png"
+      "image": "yellow_picker.png",
+      "type": "picker",
+      "color": "yellow",
+      "number": -1
     },
     {
-      "image": "yellow_reverse.png"
+      "image": "yellow_reverse.png",
+      "type": "reverse",
+      "color": "yellow",
+      "number": -1
     },
     {
-      "image": "yellow_skip.png"
+      "image": "yellow_skip.png",
+      "type": "skip",
+      "color": "yellow",
+      "number": -1
     }
   ]
 }

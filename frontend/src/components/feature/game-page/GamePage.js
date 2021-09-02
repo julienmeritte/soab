@@ -43,7 +43,7 @@ class GamePage extends React.Component {
                         ready = false;
                     }
                 }
-                if (!this.state.allReady && !this.checkArrayEmpty(this.state.listPlayer) && ready) {
+                if (!this.state.allReady && this.checkArrayEmpty(this.state.listPlayer) && ready) {
                     this.setState({
                         allReady: true
                     });
