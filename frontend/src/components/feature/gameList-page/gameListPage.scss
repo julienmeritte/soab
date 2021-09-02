@@ -1,0 +1,26 @@
+.games .game-item {
+    border-block: 5px;
+    border-style: solid;
+    background-color: grey;
+    margin: 0 5px;
+    border-spacing: 50px;
+    margin-bottom: 50px;
+}
+
+.games ul {
+    width: 900px;
+    h1 {
+        text-align: center;
+    }
+
+    li {
+        width: 50%;
+        float: left;
+        display: inline;
+    }
+
+  }
+
+.desc {
+    text-align: center;
+}
