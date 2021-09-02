@@ -35,35 +35,48 @@ const Profil = ({ profil }) => {
     let mail = sessionStorage.getItem("email");
     return (
         <div class="row">
-            <h1 class="info">Nom d'utilisateur :{username}</h1>
-            <h1 class="info">Adresse mail :{mail}</h1>
-            <div class="form-holder">
-                <div class="form-content">
-                    <div class="form-items">
-                        <form class="requires-validation" onSubmit={(e) => onSubmit(e)}>
-                        <div class="col-md-12">
-                                <input class="form-control" type="text" name="name" placeholder="Name" value={name} onChange={(e) => onChange(e)} required/>
-                                 <div class="valid-feedback">Name field is valid!</div>
-                                 <div class="invalid-feedback">Name field cannot be blank!</div>
-                          </div>
-                          <div class="col-md-12">
-                              <input class="form-control" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
-                                <div class="valid-feedback">Email field is valid!</div>
-                                <div class="invalid-feedback">Email field cannot be blank!</div>
-                          </div>       
-                          <div class="col-md-12">
-                              <input class="form-control" type="password" name="password"value={password} placeholder="Password" onChange={(e) => onChange(e)} required/>
-                                <div class="valid-feedback">Email field is valid!</div>
-                                <div class="invalid-feedback">Email field cannot be blank!</div>
-                          </div>      
+            <div class="Profil">
 
-                            <div class="form-button mt-3">
-                                <button id="submit" type="submit" class="btn btn-primary">Update</button>
+                <div className="info">
+                    <h1 className="Username">Nom d'utilisateur:</h1>
+                    <h2>{username}</h2>
+                    <h1 className="mail">Adresse mail:</h1>
+                    <h2>{mail}</h2>
+                </div>
+                <div className="profile">
+                    <div className="form-holder">
+                        <div className="form-content">
+                            <div className="form-items">
+                                <form className="requires-validation" onSubmit={(e) => onSubmit(e)}>
+                                    <div className="col-md-12">
+                                        <input className="form-control" type="text" name="name" placeholder="Name"
+                                               value={name} onChange={(e) => onChange(e)} required/>
+                                        <div className="valid-feedback">Name field is valid!</div>
+                                        <div className="invalid-feedback">Name field cannot be blank!</div>
+                                    </div>
+                                    <div className="col-md-12">
+                                        <input className="form-control" type="email" name="email"
+                                               placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)}
+                                               required/>
+                                        <div className="valid-feedback">Email field is valid!</div>
+                                        <div className="invalid-feedback">Email field cannot be blank!</div>
+                                    </div>
+                                    <div className="col-md-12">
+                                        <input className="form-control" type="password" name="password" value={password}
+                                               placeholder="Password" onChange={(e) => onChange(e)} required/>
+                                        <div className="valid-feedback">Email field is valid!</div>
+                                        <div className="invalid-feedback">Email field cannot be blank!</div>
+                                    </div>
+
+                                    <div className="form-button mt-3">
+                                        <button id="submit" type="submit" className="btn btn-primary">Update</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     )
     

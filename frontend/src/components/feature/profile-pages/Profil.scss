@@ -1,0 +1,35 @@
+.row {
+  width: 100%;
+}
+
+.Profil {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+
+  .info {
+    width: 35% !important;
+
+    h1 {
+      font-size: 26px;
+    }
+
+    h2 {
+      font-size: 20px;
+      padding-bottom: 10px;
+    }
+  }
+
+  .profile {
+    width: 60% !important;
+
+    .form-holder {
+      justify-content: flex-start;
+
+      .form-content {
+        padding: unset;
+      }
+    }
+  }
+}
