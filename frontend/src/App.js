@@ -11,6 +11,7 @@ import Alert from "./components/shared/alerts/alerts";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 import Game from "./components/feature/game-page/GamePage";
+import GameList from "./components/feature/gameList-page/gameListPage";
 import Header from "./components/core/header/Header";
 import Footer from "./components/core/footer/Footer";
 
@@ -36,7 +37,8 @@ const App = () => {
                         <Switch>
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Register} />
-                            <Route exact path="/game" component={Game} />
+                            <Route exact path="/game" component={GameList} />
+                            <Route exact path="/Playgame" component={Game} />
                             <Route exact path="/profile" component={Profil} />
                         </Switch>
                     </Suspense>
