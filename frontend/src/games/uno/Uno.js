@@ -106,10 +106,11 @@ class Uno extends React.Component {
     drawOneCard = () => {
         let cards = this.state.cards;
         let indexToGet = 0;
+        var topCard = cards[0];
         for (let i = 0; i < cards.length; i++) {
-            if (cards[i].owner === -1) {
+            if (cards[i].owner === -1 && cards[i].position[2] > topCard.position[2]) {
                 indexToGet = i;
-                break;
+                topCard = cards[i];
             }
         }
         let card = this.state.cards[indexToGet];
@@ -136,7 +137,7 @@ class Uno extends React.Component {
         }
         for (let i = 0; i < playerCards.length; i++) {
             cards[playerCards[i]].position[0] = -20 + i * 6;
-            cards[playerCards[i]].position[3] = 0.01 * i;
+            cards[playerCards[i]].position[2] = 0.01 * i;
         }
         this.setState({cards});
         this.props.sendFromChild(this.state.cards);
