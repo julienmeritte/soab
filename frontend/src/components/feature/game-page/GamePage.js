@@ -28,7 +28,7 @@ class GamePage extends React.Component {
             changes: '',
             canPlay: false,
             playerNumber: -1,
-            cards: []
+            cards: [],
             listMessages: [],
         }
     }
