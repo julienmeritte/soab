@@ -38,24 +38,27 @@ class GameListPage extends React.Component {
             return <Redirect to='/Playgame'/>;
         }
         return (
-            <div>
+            <div class="container-fluid">
+                <div class="px-lg-5">
+                    <div class="row">
                 {ListGame.map((value, index) => {
                     return (
-                        <div class="games" key={value.key}>
-                            <ul>
-                                <li>    
-                                    <div class="game-item">
-                                        <h1>{value.name}</h1>
-                                        <a onClick={() => this.handleGameSelect(value.value)}>
-                                            <img src={value.picture}></img>
-                                            <p class="desc">{value.descr}</p>
-                                        </a>
+                        <div class="col-xl-3 col-lg-4 col-md-6 mb-4" key={value.key}>
+                            <div class="bg-white rounded shadow-sm" onClick={() => this.handleGameSelect(value.value)}>
+                                <img src={value.picture} alt="" class="img-fluid card-img-top"/>
+                                <div class="p-4">
+                                    <h5> <a href="#" class="text-dark">{value.name}</a></h5>
+                                    <p class="small text-muted mb-0">{value.description}</p>
+                                    <div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+                                        <p class="small mb-0"><i class="fa fa-picture-o mr-2"></i><span class="font-weight-bold">Jeu de cartes</span></p>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     )
                 })}
+                    </div>
+               </div>
             </div>
         )
     }

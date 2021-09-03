@@ -75,6 +75,7 @@ class GamePage extends React.Component {
 
     onSendMsg = (text) => {
         socket.emit('sendMessage' , {name: this.state.player.name , msg : text , room: this.state.player.room});
+        this.setState({text : ""});
     }
 
     onReceivedMsg = () => {
