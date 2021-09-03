@@ -72,10 +72,10 @@ io.on('connection', (socket) => {
         socket.emit('getAllMessageReturn' , msgRepo.findByRoom(data.room));
     });
 
-    /*socket.on("disconnect", () => {
+    socket.on("disconnect", () => {
         clientRepo.deleteBySocketID(socket.id);
         console.log(clientRepo.findAll());
-    });*/
+    });
 
     socket.on('getAllPlayersByRoom' , (data) => {
         socket.emit('givePlayersByRoom' , {
@@ -92,9 +92,6 @@ io.on('connection', (socket) => {
         let cards = clientRepo.getCards(data.code);
         callback(cards);
     });
-
-
-
 })
 
 
