@@ -23,6 +23,15 @@ class GamePage extends React.Component {
         this.textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
         this.textBoard = `${process.env.PUBLIC_URL}/assets/images/uno/uno_board.png`;
 
+        this.textLoadedBack = this.textureLoader.load(this.textBack);
+        this.textLoadedBoard = this.textureLoader.load(this.textBoard);
+
+        this.BUTTON_SPRITE = {
+            DISTRIB_ALL: this.textureLoader.load(`${process.env.PUBLIC_URL}/assets/images/uno/uno_button1.png`),
+            DRAW_ONE: this.textureLoader.load(`${process.env.PUBLIC_URL}/assets/images/uno/uno_button2.png`),
+            REORDER: this.textureLoader.load(`${process.env.PUBLIC_URL}/assets/images/uno/uno_button3.png`)
+        }
+
         this.state = {
             roomCreated: false,
             player: {},
@@ -139,6 +148,21 @@ class GamePage extends React.Component {
         });
     }*/
 
+    shuffleCards(cards) {
+        let shuffle = [];
+        for (let i = 0; i < cards.length; i++) {
+            shuffle.push(i);
+        }
+        const shuffledArray = shuffle.sort((a, b) => 0.5 - Math.random());
+        console.log('shuffle', shuffledArray);
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].position[0] = this.deckPosition[0];
+            cards[i].position[1] = this.deckPosition[1];
+            cards[i].position[2] = (this.deckPosition[2] + shuffledArray[i] * 0.01).toFixed(2);
+        }
+        return cards;
+    }
+
     refreshCardsFromChild = () => {
         let creator;
         for (let player of this.state.listPlayer) {
@@ -186,7 +210,7 @@ class GamePage extends React.Component {
                 });
             }
             //cards = this.shuffleCards(cards);
-            return cards;
+            return this.shuffleCards(cards);
     }
 
     render() {
@@ -212,6 +236,9 @@ class GamePage extends React.Component {
                                      canPlay={canPlay}
                                      changes={changes}
                                      cards={cards}
+                                     textBack={this.textLoadedBack}
+                                     textBoard={this.textBoard}
+                                     buttonSprite={this.BUTTON_SPRITE}
                                 />
                             </div>
                         )

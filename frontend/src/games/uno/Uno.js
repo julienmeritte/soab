@@ -12,7 +12,7 @@ class ActionButton extends React.Component {
 
     constructor(props) {
         super(props);
-        this.image = new THREE.TextureLoader().load(props.image);
+        //this.image = new THREE.TextureLoader().load(props.image);
     }
 
     render() {
@@ -23,7 +23,7 @@ class ActionButton extends React.Component {
                   }}>
                 <boxBufferGeometry attach="geometry"
                                    args={[this.props.buttonSize[0], this.props.buttonSize[1], 0.04]}/>
-                <meshStandardMaterial attach="material" map={this.image}/>
+                <meshStandardMaterial attach="material" map={this.props.image}/>
             </mesh>
         );
     }
@@ -35,12 +35,6 @@ class Uno extends React.Component {
     constructor(props) {
         super(props);
 
-        this.BUTTON_SPRITE = {
-            DISTRIB_ALL: `${process.env.PUBLIC_URL}/assets/images/uno/uno_button1.png`,
-            DRAW_ONE: `${process.env.PUBLIC_URL}/assets/images/uno/uno_button2.png`,
-            REORDER: `${process.env.PUBLIC_URL}/assets/images/uno/uno_button3.png`
-        }
-
         this.players = [1, 2];
         this.currentPlayer = this.props.playerNumber;
 
@@ -51,11 +45,6 @@ class Uno extends React.Component {
 
         this.currentGame = GAMES_ENUM.UNO;
         this.deckPosition = [-30, 0, 0];
-        this.textureLoader = new THREE.TextureLoader();
-        this.textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
-        this.textBoard = `${process.env.PUBLIC_URL}/assets/images/uno/uno_board.png`;
-
-        this.backTexture = this.textureLoader.load(this.textBack);
 
         //this.cards = [];
 
@@ -63,7 +52,7 @@ class Uno extends React.Component {
 
         this.state = {
             cards: this.props.cards,
-            blankTexture: this.textureLoader.load(this.textBack)
+            blankTexture: this.props.textBack
         }
 
         console.log('Before deck: ', this.state.cards);
@@ -76,32 +65,7 @@ class Uno extends React.Component {
                 this.props.refreshCardsFromChild();
                 console.log('to refresh child', this.props.cards);
             }
-
-            /*if (!this.props.canPlay) {
-                console.log('exists', this.props.cards);
-                this.setState({
-                    cards: this.props.cards
-                })
-            } else {
-                console.log('dont exists', this.props.cards);
-            }*/
         }, 200);
-    }
-
-    shuffleCards(cards) {
-        for (let i = cards.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = cards[i];
-            cards[i] = cards[j];
-            cards[j] = temp;
-        }
-        for (let i = 0; i < cards.length; i++) {
-            cards[i].index = i;
-            cards[i].position[0] = this.deckPosition[0];
-            cards[i].position[1] = this.deckPosition[1];
-            cards[i].position[2] = this.deckPosition[2] + i * 0.01;
-        }
-        return cards;
     }
 
     cardOnClick = (index, type, e) => {
@@ -113,8 +77,6 @@ class Uno extends React.Component {
             cards[index] = card;
             this.setState({cards});
             this.props.sendFromChild(cards);
-            console.log('CARD IN CHILD', card);
-            console.log('CARDS FROM PARENT', this.props.cards);
         }
     }
 
@@ -144,10 +106,11 @@ class Uno extends React.Component {
     drawOneCard = () => {
         let cards = this.state.cards;
         let indexToGet = 0;
+        var topCard = cards[0];
         for (let i = 0; i < cards.length; i++) {
-            if (cards[i].owner === -1) {
+            if (cards[i].owner === -1 && cards[i].position[2] > topCard.position[2]) {
                 indexToGet = i;
-                break;
+                topCard = cards[i];
             }
         }
         let card = this.state.cards[indexToGet];
@@ -174,53 +137,30 @@ class Uno extends React.Component {
         }
         for (let i = 0; i < playerCards.length; i++) {
             cards[playerCards[i]].position[0] = -20 + i * 6;
-            cards[playerCards[i]].position[3] = 0.01 * i;
+            cards[playerCards[i]].position[2] = 0.01 * i;
         }
         this.setState({cards});
         this.props.sendFromChild(this.state.cards);
         console.log(playerCards);
     }
 
-    visualizeCard = (image) => {
-        this.setState({
-            blankTexture: image
-        })
-    }
-
-    /*distributeCardsToPlayer() {
-        for (let i = 0; i < 10; i++) {
-            setTimeout(() => {
-                if (i % 2 === 0) {
-                    cardPlayerOne.push(cards[cards.length - 1]);
-                    cardPlayerOne[i / 2].props.position[1] = -32.5;
-                    cardPlayerOne[i / 2].props.position[0] += 12 + 5 * i;
-                    if (currentPlayer === 1) {
-                        cardPlayerOne[i / 2].props.position[2] = -12;
-                    }
-                    // console.log('player1Deck: ', cardPlayerOne);
-                } else if (i % 2 === 1) {
-                    cardPlayerTwo.push(cards[cards.length - 1]);
-                    cardPlayerTwo[parseInt(i / 2)].props.position[1] = 32.5;
-                    cardPlayerTwo[parseInt(i / 2)].props.position[0] += 12 + 5 * (i - 1);
-                    if (currentPlayer === 2) {
-                        cardPlayerTwo[parseInt(i / 2)].props.position[2] = -12;
-                    }
-                    // console.log('player2Deck: ', cardPlayerTwo);
-                }
-                cards.splice(cards.length - 1, 1);
-            }, 200 * i);
+    visualizeCard = (image, index) => {
+        if (this.props.cards[index].owner === this.currentPlayer) {
+            this.setState({
+                blankTexture: image
+            })
         }
-    }*/
+    }
 
     render() {
         return (
             <Canvas camera={this.camera} resize={{scroll: false, debounce: {scroll: 0, resize: 0}}}>
                 <ambientLight intensity={0.6}/>
-                <Board texture={this.textBoard}/>
+                <Board texture={this.props.textBoard}/>
                 {this.props.cards.map((card) => <Card
                     position={card.position}
                     rotation={card.rotation}
-                    texture={[this.backTexture, card.image]}
+                    texture={[this.props.textBack, card.image]}
                     cardClick={this.cardOnClick}
                     cardVisualize={this.visualizeCard}
                     key={card.index} index={card.index}
@@ -240,11 +180,11 @@ class Uno extends React.Component {
                     color={CARD_COLOR.BLANK}
                 />
                 <ActionButton position={[40, 3, 0]} cardClick={this.buttonOnClick} rotation={[0, 0, 0]}
-                              buttonSize={[14, 6, 0.04]} image={this.BUTTON_SPRITE.REORDER} index={2}/>
+                              buttonSize={[14, 6, 0.04]} image={this.props.buttonSprite.REORDER} index={2}/>
                 <ActionButton position={[40, -3.5, 0]} cardClick={this.buttonOnClick} rotation={[0, 0, 0]}
-                              buttonSize={[14, 6, 0.04]} image={this.BUTTON_SPRITE.DRAW_ONE} index={1}/>
+                              buttonSize={[14, 6, 0.04]} image={this.props.buttonSprite.DRAW_ONE} index={1}/>
                 <ActionButton position={[40, -10, 0]} cardClick={this.buttonOnClick} rotation={[0, 0, 0]}
-                              buttonSize={[14, 6, 0.04]} image={this.BUTTON_SPRITE.DISTRIB_ALL} index={0}/>
+                              buttonSize={[14, 6, 0.04]} image={this.props.buttonSprite.DISTRIB_ALL} index={0}/>
             </Canvas>
         );
     }

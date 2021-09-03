@@ -36,14 +36,14 @@ class Card extends React.Component {
     onEnter(index, e) {
         e.stopPropagation();
         if (this.type !== CARD_TYPE.BLANK) {
-            this.props.cardVisualize(this.props.texture[1])
+            this.props.cardVisualize(this.props.texture[1], this.props.index)
         }
     }
 
     onLeave(index, e) {
         e.stopPropagation();
         if (this.type !== CARD_TYPE.BLANK) {
-            this.props.cardVisualize(this.props.texture[0])
+            this.props.cardVisualize(this.props.texture[0], this.props.index)
         }
     }
 
