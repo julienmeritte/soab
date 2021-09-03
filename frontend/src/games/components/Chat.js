@@ -11,16 +11,16 @@ class Chat extends React.Component {
             display: true,
         }
     }
-    
+
     componentDidMount() {
-        
+
         if(this.props.player != null) {
             setInterval(() => {
                 this.props.onReceivedMsg();
                 if (this.props.listMessage != null) {
                     this.setState({listMsg: this.props.listMessages})
                 }
-                
+
             }, 1000);
         }
     }
@@ -46,7 +46,7 @@ class Chat extends React.Component {
             console.log('false now');
         }
     }
-    
+
     render() {
         const{ listMsg ,text , display} = this.state;
         const divhide = {
@@ -62,7 +62,7 @@ class Chat extends React.Component {
                         <form class="form-container" onSubmit={(e) => {this.onSubmit(e);}}>
                             <div class="message-container">
                                 <ul class="messages">
-                                    {this.props.listMessages.map((data, i) => {                      
+                                    {this.props.listMessages.map((data, i) => {
                                         return (<li key={i}>
                                             <p class="username"><b>{data.name}</b><small class="message">{data.text}</small></p>
                                         </li>)
@@ -71,13 +71,13 @@ class Chat extends React.Component {
                             </div>
                             <input class="form-control" type="text" name="message" value={text} placeholder="Type your message" onChange={(e) => this.handleNameChange(e)} required/>
                             <button id="submit" type="submit" class="btn btn-primary">Send</button>
-                            {display ? 
+                            {display ?
                             (<button type="button" class="btn cancel" onClick={this.closeForm}>Close</button> )
                             : (<div></div>)}
                         </form>
                     </div>
                 </div>
-                {!display ? 
+                {!display ?
                     (<button class="btn btn-primary" onClick={this.closeForm}>Open chat</button>)
                     : (<div></div>)}
             </div>
