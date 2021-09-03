@@ -57,21 +57,26 @@ class Uno extends React.Component {
 
         this.backTexture = this.textureLoader.load(this.textBack);
 
-        this.cards = this.initCards();
+        //this.cards = [];
 
         console.log('init cards parent', this.props.cards);
 
         this.state = {
-            cards:  this.cards,
+            cards: this.props.cards,
             blankTexture: this.textureLoader.load(this.textBack)
         }
 
         console.log('Before deck: ', this.state.cards);
+        this.props.sendFromChild(this.state.cards);
     }
 
     componentDidMount() {
         setInterval(() => {
-            this.props.refreshCardsFromChild();
+            if (!this.props.canPlay) {
+                this.props.refreshCardsFromChild();
+                console.log('to refresh child', this.props.cards);
+            }
+
             /*if (!this.props.canPlay) {
                 console.log('exists', this.props.cards);
                 this.setState({
@@ -80,7 +85,7 @@ class Uno extends React.Component {
             } else {
                 console.log('dont exists', this.props.cards);
             }*/
-        }, 1000);
+        }, 200);
     }
 
     shuffleCards(cards) {
@@ -108,6 +113,7 @@ class Uno extends React.Component {
             cards[index] = card;
             this.setState({cards});
             this.props.sendFromChild(cards);
+            console.log('CARD IN CHILD', card);
             console.log('CARDS FROM PARENT', this.props.cards);
         }
     }
@@ -136,22 +142,25 @@ class Uno extends React.Component {
     }
 
     drawOneCard = () => {
-        let cards = [...this.state.cards];
+        let cards = this.state.cards;
         let indexToGet = 0;
-        for (let i = this.state.cards.length - 1; i > 0; i--) {
-            if (this.state.cards[i].owner === -1) {
+        for (let i = 0; i < cards.length; i++) {
+            if (cards[i].owner === -1) {
                 indexToGet = i;
                 break;
             }
         }
-        let card = {...this.state.cards[indexToGet]};
+        let card = this.state.cards[indexToGet];
         card.position[0] += 10;
         card.position[1] -= 32;
         card.rotation[1] = Math.PI;
         card.owner = this.currentPlayer;
         cards[indexToGet] = card;
-        this.setState({cards});
-        this.props.sendFromChild(cards);
+        this.setState({
+            cards: cards
+        });
+        console.log(cards);
+        console.log(this.state.cards);
     }
 
     reorderCards = () => {
@@ -168,6 +177,7 @@ class Uno extends React.Component {
             cards[playerCards[i]].position[3] = 0.01 * i;
         }
         this.setState({cards});
+        this.props.sendFromChild(this.state.cards);
         console.log(playerCards);
     }
 

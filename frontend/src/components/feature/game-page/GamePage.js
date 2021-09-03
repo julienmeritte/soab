@@ -9,6 +9,7 @@ import Card from "../../../games/components/Card";
 import properties from "../../../games/uno/properties.json";
 import Chat from "../../../games/components/Chat";
 import deck from "../../../games/uno/deck.json";
+import * as THREE from "three";
 
 const socket = openSocket('http://localhost:3002');
 
@@ -16,6 +17,11 @@ const socket = openSocket('http://localhost:3002');
 class GamePage extends React.Component {
     constructor(props) {
         super(props)
+
+        this.deckPosition = [-30, 0, 0];
+        this.textureLoader = new THREE.TextureLoader();
+        this.textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
+        this.textBoard = `${process.env.PUBLIC_URL}/assets/images/uno/uno_board.png`;
 
         this.state = {
             roomCreated: false,
@@ -28,7 +34,7 @@ class GamePage extends React.Component {
             changes: '',
             canPlay: false,
             playerNumber: -1,
-            cards: [],
+            cards: this.initCards(),
             listMessages: [],
         }
     }
@@ -62,7 +68,6 @@ class GamePage extends React.Component {
                         allReady: true,
                         canPlay: this.state.player.creator
                     });
-                    console.log("START", this.state.playerNumber);
                 }
             }
         }, 1000);
@@ -127,6 +132,13 @@ class GamePage extends React.Component {
         });
     }
 
+    /*sendFromParent(cards) {
+        socket.emit('setHand', {
+            code: this.state.player.code,
+            cards: cards
+        });
+    }*/
+
     refreshCardsFromChild = () => {
         let creator;
         for (let player of this.state.listPlayer) {
@@ -139,18 +151,27 @@ class GamePage extends React.Component {
             socket.emit('getCardsFromCreator', {
                 code: creator.code
             }, (response) => {
-                console.log('cards from response:', response);
-                this.setState({
-                    //canPlay: false
-                    cards: response
-                });
+                if (response && response.length > 0) {;
+                    let cards = this.state.cards;
+                    for (let i = 0; i < response.length; i++) {
+                        cards[i].position = response[i].position;
+                        cards[i].rotation = response[i].rotation;
+                    }
+                    this.setState({
+                        cards: cards
+                    });
+                    /*this.setState({
+                        //canPlay: false
+                        cards: response
+                    });*/
+                }
             });
         }
 
         //console.log(creator);
     }
 
-    initCardsFromChild = () => {
+    initCards = () => {
             let cards = [];
             for (let i = 0; i < deck.cards.length; i++) {
                 cards.push({
@@ -164,7 +185,7 @@ class GamePage extends React.Component {
                     number: deck.cards[i].number
                 });
             }
-            cards = this.shuffleCards(cards);
+            //cards = this.shuffleCards(cards);
             return cards;
     }
 
