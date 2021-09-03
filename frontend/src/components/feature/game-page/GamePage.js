@@ -219,12 +219,19 @@ class GamePage extends React.Component {
                             <div>
                                 <button className={'game-button-ready'} onClick={this.setPlayerReady}>Prêt</button>
                                 {
-                                    this.state.listPlayer.map((player) =>
-                                        <div>
-                                            {player.name} : {player.ready ? (<span>Prêt</span>) : (
-                                            <span>Pas prêt</span>)}
-                                        </div>
-                                    )
+                                    <ul class="players">
+                                        {this.state.listPlayer.map((player) =>
+                                            <div>
+                                                
+                                                    <li>
+                                                        {player.name} : {player.ready ? (<img class="check" src="./assets/images/check/check.png"></img>) : (
+                                                        <img class="check" src="./assets/images/check/no_check.png"></img>)}
+                                                    </li>
+                                                
+                                                
+                                            </div>
+                                        )}
+                                    </ul>
                                 }<br/>
                                 Tous les joueurs ne sont pas prêts.
                             </div>
