@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('getCardsFromCreator', (data, callback) => {
-        let cards = clientRepo.getCards(data.code);
+        let cards = clientRepo.getCards(data.code); 
         callback(cards);
     });
 })

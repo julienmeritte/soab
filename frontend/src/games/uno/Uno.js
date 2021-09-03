@@ -86,10 +86,15 @@ class Uno extends React.Component {
             switch (index) {
                 case 0:
                     console.log('Click button distribution cartes');
+                    for (let i = 0; i < 7; i++) {
+                        this.drawOneCard(1);
+                        this.drawOneCard(0);
+                    }
+                    this.reorderCards();
                     break;
                 case 1:
                     console.log('Click button piocher carte');
-                    this.drawOneCard();
+                    this.drawOneCard(this.currentPlayer);
                     this.reorderCards();
                     break;
                 case 2:
@@ -103,7 +108,7 @@ class Uno extends React.Component {
         }
     }
 
-    drawOneCard = () => {
+    drawOneCard = (indexPlayer) => {
         let cards = this.state.cards;
         let indexToGet = 0;
         var topCard = cards[0];
@@ -117,7 +122,7 @@ class Uno extends React.Component {
         card.position[0] += 10;
         card.position[1] -= 32;
         card.rotation[1] = Math.PI;
-        card.owner = this.currentPlayer;
+        card.owner = indexPlayer;
         cards[indexToGet] = card;
         this.setState({
             cards: cards
@@ -133,11 +138,21 @@ class Uno extends React.Component {
         for (let card of cards) {
             if (card.owner === this.currentPlayer) {
                 playerCards.push(card.index);
+            } else if (card.owner >= 0) {
+                enemyCards.push(card.index);
             }
         }
         for (let i = 0; i < playerCards.length; i++) {
-            cards[playerCards[i]].position[0] = -20 + i * 6;
+            cards[playerCards[i]].position[0] = -27 + i * 6;
+            cards[playerCards[i]].position[1] = -32.5;
             cards[playerCards[i]].position[2] = 0.01 * i;
+            cards[playerCards[i]].rotation[1] = Math.PI;
+        }
+        for (let i = 0; i < enemyCards.length; i++) {
+            cards[enemyCards[i]].position[0] = -27 + i * 6;
+            cards[enemyCards[i]].position[1] = 32.5;
+            cards[enemyCards[i]].position[2] = 0.01 * i;
+            cards[enemyCards[i]].rotation[1] = 0;
         }
         this.setState({cards});
         this.props.sendFromChild(this.state.cards);

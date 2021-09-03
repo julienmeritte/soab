@@ -160,6 +160,7 @@ class GamePage extends React.Component {
             cards[i].position[1] = this.deckPosition[1];
             cards[i].position[2] = (this.deckPosition[2] + shuffledArray[i] * 0.01).toFixed(2);
         }
+        console.log('shuffled', cards);
         return cards;
     }
 
