@@ -41,7 +41,7 @@ class GamePage extends React.Component {
             name: "test",
             room: "oui",
             changes: '',
-            canPlay: false,
+            canPlay: -1,
             playerNumber: -1,
             cards: this.initCards(),
             listMessages: [],
@@ -75,7 +75,7 @@ class GamePage extends React.Component {
                     }
                     this.setState({
                         allReady: true,
-                        canPlay: this.state.player.creator
+                        canPlay: 0
                     });
                 }
             }
@@ -134,10 +134,13 @@ class GamePage extends React.Component {
         });
     }
 
-    sendFromChild = (cards) => {
+    sendFromChild = (cards, action) => {
+        console.log("action set hand", action);
+        console.log("PLAYER ID TO SET", this.state.listPlayer[0].code);
         socket.emit('setHand', {
-            code: this.state.player.code,
-            cards: cards
+            code: this.state.listPlayer[0].code,
+            cards: cards,
+            action: action
         });
     }
 
@@ -164,6 +167,18 @@ class GamePage extends React.Component {
         return cards;
     }
 
+    setCanActionFromChild = () => {
+        if (this.state.playerNumber === 0) {
+            this.setState({
+                canPlay: 1
+            });
+        } else {
+            this.setState({
+                canPlay: 0
+            });
+        }
+    }
+
     refreshCardsFromChild = () => {
         let creator;
         for (let player of this.state.listPlayer) {
@@ -176,24 +191,50 @@ class GamePage extends React.Component {
             socket.emit('getCardsFromCreator', {
                 code: creator.code
             }, (response) => {
-                if (response && response.length > 0) {;
+                if (response.cards && response.cards.length > 0) {
                     let cards = this.state.cards;
-                    for (let i = 0; i < response.length; i++) {
-                        cards[i].position = response[i].position;
-                        cards[i].rotation = response[i].rotation;
+                    for (let i = 0; i < response.cards.length; i++) {
+                        cards[i].owner = response.cards[i].owner;
                     }
                     this.setState({
-                        cards: cards
+                        cards: this.reorderCardsInParent(cards)
                     });
-                    /*this.setState({
-                        //canPlay: false
-                        cards: response
-                    });*/
+                    console.log('action', response);
+                    if (response.action >= 0) {
+                        this.setState({
+                            canPlay: response.action
+                        });
+                    }
                 }
             });
         }
+    }
 
-        //console.log(creator);
+    reorderCardsInParent(cards) {
+        let playerCards = [];
+        let enemyCards = [];
+        for (let card of cards) {
+            if (card.owner === this.state.playerNumber) {
+                playerCards.push(card.index);
+            } else if (card.owner >= 0) {
+                enemyCards.push(card.index);
+            }
+        }
+        for (let i = 0; i < playerCards.length; i++) {
+            console.log('player CARD PARENT ID', playerCards[i]);
+            cards[playerCards[i]].position[0] = -27 + i * 6;
+            cards[playerCards[i]].position[1] = -32.5;
+            cards[playerCards[i]].position[2] = 0.01 * i;
+            cards[playerCards[i]].rotation[1] = Math.PI;
+        }
+        for (let i = 0; i < enemyCards.length; i++) {
+            console.log('enemy CARD PARENT ID', playerCards[i]);
+            cards[enemyCards[i]].position[0] = -27 + i * 6;
+            cards[enemyCards[i]].position[1] = 32.5;
+            cards[enemyCards[i]].position[2] = 0.01 * i;
+            cards[enemyCards[i]].rotation[1] = 0;
+        }
+        return cards;
     }
 
     initCards = () => {
@@ -240,6 +281,7 @@ class GamePage extends React.Component {
                                      textBack={this.textLoadedBack}
                                      textBoard={this.textBoard}
                                      buttonSprite={this.BUTTON_SPRITE}
+                                     setCanActionFromChild={this.setCanActionFromChild}
                                 />
                             </div>
                         )

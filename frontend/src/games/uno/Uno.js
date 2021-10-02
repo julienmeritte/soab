@@ -49,6 +49,7 @@ class Uno extends React.Component {
         //this.cards = [];
 
         console.log('init cards parent', this.props.cards);
+        console.log('PLAYER ID', this.currentPlayer);
 
         this.state = {
             cards: this.props.cards,
@@ -56,12 +57,14 @@ class Uno extends React.Component {
         }
 
         console.log('Before deck: ', this.state.cards);
-        this.props.sendFromChild(this.state.cards);
+        if (this.props.canPlay === this.currentPlayer) {
+            this.props.sendFromChild(this.state.cards, this.props.canPlay);
+        }
     }
 
     componentDidMount() {
         setInterval(() => {
-            if (!this.props.canPlay) {
+            if (this.props.canPlay !== this.currentPlayer) {
                 this.props.refreshCardsFromChild();
                 console.log('to refresh child', this.props.cards);
             }
@@ -70,19 +73,19 @@ class Uno extends React.Component {
 
     cardOnClick = (index, type, e) => {
         e.stopPropagation();
-        if (this.props.canPlay && type !== CARD_TYPE.BLANK) {
+        if (this.props.canPlay === this.currentPlayer && type !== CARD_TYPE.BLANK) {
             let cards = [...this.state.cards];
             let card = {...this.state.cards[index]};
             //card.rotation[1] -= Math.PI;
             cards[index] = card;
             this.setState({cards});
-            this.props.sendFromChild(cards);
+            //this.props.sendFromChild(cards);
         }
     }
 
     buttonOnClick = (index, e) => {
         e.stopPropagation();
-        if (this.props.canPlay) {
+        if (this.props.canPlay === this.currentPlayer) {
             switch (index) {
                 case 0:
                     console.log('Click button distribution cartes');
@@ -91,11 +94,15 @@ class Uno extends React.Component {
                         this.drawOneCard(0);
                     }
                     this.reorderCards();
+                    this.props.sendFromChild(this.state.cards, this.getOtherPlayerId());
                     break;
                 case 1:
                     console.log('Click button piocher carte');
                     this.drawOneCard(this.currentPlayer);
                     this.reorderCards();
+                    this.props.sendFromChild(this.state.cards, this.getOtherPlayerId());
+                    this.props.setCanActionFromChild();
+                    console.log("canplay", this.props.canPlay);
                     break;
                 case 2:
                     console.log('Click button trier cartes');
@@ -105,6 +112,14 @@ class Uno extends React.Component {
                     console.log('Click button failed');
                     break;
             }
+        }
+    }
+
+    getOtherPlayerId() {
+        if (this.currentPlayer === 0) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -127,8 +142,8 @@ class Uno extends React.Component {
         this.setState({
             cards: cards
         });
-        console.log(cards);
-        console.log(this.state.cards);
+        console.log('draw', cards);
+        console.log('alldraw', this.state.cards);
     }
 
     reorderCards = () => {
@@ -155,7 +170,6 @@ class Uno extends React.Component {
             cards[enemyCards[i]].rotation[1] = 0;
         }
         this.setState({cards});
-        this.props.sendFromChild(this.state.cards);
         console.log(playerCards);
     }
 
@@ -205,18 +219,18 @@ class Uno extends React.Component {
     }
 
 
-    //setupGameStart();
+    /*setupGameStart(); 
 
-    /*function setupGameStart() {
+    setupGameStart() {
         shuffleCards();
         setTimeout(() => {
             distributeCardsToPlayer();
         }, 1000);
 
-    }*/
+    }
 
 
-    /*function shuffleCards() {
+    shuffleCards() {
         for (let i = cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             const temp = cards[i];
