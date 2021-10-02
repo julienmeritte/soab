@@ -311,6 +311,54 @@
       "type": "skip",
       "color": "yellow",
       "number": -1
+    },
+    {
+      "image": "wild_pick_four.png",
+      "type": "four",
+      "color": "multi",
+      "number": -1
+    },
+    {
+      "image": "wild_pick_four.png",
+      "type": "four",
+      "color": "multi",
+      "number": -1
+    },
+    {
+      "image": "wild_pick_four.png",
+      "type": "four",
+      "color": "multi",
+      "number": -1
+    },
+    {
+      "image": "wild_pick_four.png",
+      "type": "four",
+      "color": "multi",
+      "number": -1
+    },
+    {
+      "image": "wild_color_changer.png",
+      "type": "changer",
+      "color": "multi",
+      "number": -1
+    },
+    {
+      "image": "wild_color_changer.png",
+      "type": "changer",
+      "color": "multi",
+      "number": -1
+    },
+    {
+      "image": "wild_color_changer.png",
+      "type": "changer",
+      "color": "multi",
+      "number": -1
+    },
+    {
+      "image": "wild_color_changer.png",
+      "type": "changer",
+      "color": "multi",
+      "number": -1
     }
   ]
 }

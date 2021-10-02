@@ -87,16 +87,17 @@ io.on('connection', (socket) => {
     socket.on('setHand', (data) => {
         clientRepo.setCards(data.cards, data.code);
         clientRepo.setAction(data.action, data.code);
-        console.log('action sethand', data.action);
+        clientRepo.setTexte(data.texte, data.code);
     });
 
     socket.on('getCardsFromCreator', (data, callback) => {
         let cards = clientRepo.getCards(data.code);
         let action = clientRepo.getAction(data.code);
-        console.log('action getCards', action);
+        let texte = clientRepo.getTexte(data.code);
         let response = {
             cards: cards,
-            action: action
+            action: action,
+            texte: texte
         }
         callback(response);
     });

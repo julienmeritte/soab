@@ -8,6 +8,7 @@ module.exports = class client {
         this.creator = false;
         this.cards = [];
         this.action = -1;
+        this.texte = "";
     }
 
     getReady() {
@@ -68,5 +69,13 @@ module.exports = class client {
 
     getAction() {
         return this.action;
+    }
+
+    setTexte(texte) {
+        this.texte = texte;
+    }
+
+    getTexte() {
+        return this.texte;
     }
 }
