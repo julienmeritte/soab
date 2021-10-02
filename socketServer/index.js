@@ -86,11 +86,20 @@ io.on('connection', (socket) => {
     // SOCKET JEU
     socket.on('setHand', (data) => {
         clientRepo.setCards(data.cards, data.code);
+        clientRepo.setAction(data.action, data.code);
+        clientRepo.setTexte(data.texte, data.code);
     });
 
     socket.on('getCardsFromCreator', (data, callback) => {
         let cards = clientRepo.getCards(data.code);
-        callback(cards);
+        let action = clientRepo.getAction(data.code);
+        let texte = clientRepo.getTexte(data.code);
+        let response = {
+            cards: cards,
+            action: action,
+            texte: texte
+        }
+        callback(response);
     });
 })
 

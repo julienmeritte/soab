@@ -6,6 +6,9 @@ export const CARD_TYPE = {
     NUMBER: "number",
     PICKER: "picker",
     REVERSER: "reverse",
+    SKIP: "skip",
+    FOUR: "four",
+    CHANGER: "changer",
     BLANK: "blank"
 }
 
@@ -14,5 +17,6 @@ export const CARD_COLOR = {
     GREEN: "green",
     YELLOW: "yellow",
     RED: "red",
+    MULTI: "multi",
     BLANK: "blank"
 }

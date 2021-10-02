@@ -102,4 +102,38 @@ module.exports = class ClientRepository{
             }
         }
     }
+
+    setAction(action, code) {
+        for(let client of this.clients) {
+            if (client.code === code) {
+                client.setAction(action);
+                break;
+            }
+        }
+    }
+
+    getAction(code) {
+        for(let client of this.clients) {
+            if (client.code === code) {
+                return client.getAction();
+            }
+        }
+    }
+
+    setTexte(texte, code) {
+        for(let client of this.clients) {
+            if (client.code === code) {
+                client.setTexte(texte);
+                break;
+            }
+        }
+    }
+
+    getTexte(code) {
+        for(let client of this.clients) {
+            if (client.code === code) {
+                return client.getTexte();
+            }
+        }
+    }
 };
