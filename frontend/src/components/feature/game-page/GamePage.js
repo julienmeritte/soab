@@ -19,7 +19,7 @@ class GamePage extends React.Component {
 
     this.deckPosition = [-30, 0, 0];
     this.textureLoader = new THREE.TextureLoader();
-    this.textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back.png`;
+    this.textBack = `${process.env.PUBLIC_URL}/assets/images/uno/card_back_alt.png`;
     this.textBoard = `${process.env.PUBLIC_URL}/assets/images/uno/uno_board.png`;
 
     this.textLoadedBack = this.textureLoader.load(this.textBack);
@@ -292,15 +292,16 @@ class GamePage extends React.Component {
     } else if (enemyCards.length === 0) {
       this.setWinnerFromChild(this.getOtherPlayerId());
     }
-    console.log("winner", this.state.winner);
+    let larger = 60 / playerCards.length;
     for (let i = 0; i < playerCards.length; i++) {
-      cards[playerCards[i]].position[0] = -27 + i * 6;
+      cards[playerCards[i]].position[0] = -27 + i * larger;
       cards[playerCards[i]].position[1] = -32.5;
       cards[playerCards[i]].position[2] = 0.01 * i;
       cards[playerCards[i]].rotation[1] = Math.PI;
     }
+    larger = 60 / enemyCards.length;
     for (let i = 0; i < enemyCards.length; i++) {
-      cards[enemyCards[i]].position[0] = -27 + i * 6;
+      cards[enemyCards[i]].position[0] = -27 + i * larger;
       cards[enemyCards[i]].position[1] = 32.5;
       cards[enemyCards[i]].position[2] = 0.01 * i;
       cards[enemyCards[i]].rotation[1] = 0;

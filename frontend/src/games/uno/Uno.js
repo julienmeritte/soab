@@ -301,7 +301,6 @@ class Uno extends React.Component {
     } else if (enemyCards.length === 0) {
       this.props.setWinnerFromChild(this.getOtherPlayerId())
     }
-    console.log("winner", this.props.winner);
     let larger = 60 / playerCards.length;
     for (let i = 0; i < playerCards.length; i++) {
       cards[playerCards[i]].position[0] = -27 + i * larger;
