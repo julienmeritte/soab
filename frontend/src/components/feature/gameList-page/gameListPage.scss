@@ -24,3 +24,14 @@
 .desc {
     text-align: center;
 }
+
+.size {
+    min-height: 100px;
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
+.size-img {
+    min-height: 300px;
+    max-height: 300px;
+}
