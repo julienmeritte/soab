@@ -62,7 +62,8 @@ class GamePage extends React.Component {
       playerNumber: -1,
       cards: this.initCards(),
       listMessages: [],
-      texte: ""
+      texte: "",
+      winner: -1,
     };
   }
 
@@ -167,15 +168,15 @@ class GamePage extends React.Component {
       code: this.state.listPlayer[0].code,
       cards: cards,
       action: action,
-      texte: texte
+      texte: texte,
     });
   };
 
   updateTexteFromChild = (texte) => {
-      this.setState({
-        texte: texte
-      });
-  }
+    this.setState({
+      texte: texte,
+    });
+  };
 
   /*sendFromParent(cards) {
         socket.emit('setHand', {
@@ -251,19 +252,17 @@ class GamePage extends React.Component {
         (response) => {
           if (response.cards && response.cards.length > 0) {
             let cards = this.state.cards;
-            console.log("response", response);
             for (let i = 0; i < response.cards.length; i++) {
               cards[i].owner = response.cards[i].owner;
               if (cards[i].owner === -2) {
-                  cards[i].rotation[1] = response.cards[i].rotation[1];
-                  cards[i].position[2] = response.cards[i].position[2];
+                cards[i].rotation[1] = response.cards[i].rotation[1];
+                cards[i].position[2] = response.cards[i].position[2];
               }
             }
             this.setState({
               cards: this.reorderCardsInParent(cards),
-              texte: response.texte
+              texte: response.texte,
             });
-            console.log(this.state.texte);
             if (response.action >= 0) {
               this.setState({
                 canPlay: response.action,
@@ -285,9 +284,15 @@ class GamePage extends React.Component {
       } else if (card.owner >= 0) {
         enemyCards.push(card.index);
       } else if (card.owner === -2) {
-          middleCards.push(card.index);
+        middleCards.push(card.index);
       }
     }
+    if (playerCards.length === 0) {
+      this.setWinnerFromChild(this.state.playerNumber);
+    } else if (enemyCards.length === 0) {
+      this.setWinnerFromChild(this.getOtherPlayerId());
+    }
+    console.log("winner", this.state.winner);
     for (let i = 0; i < playerCards.length; i++) {
       cards[playerCards[i]].position[0] = -27 + i * 6;
       cards[playerCards[i]].position[1] = -32.5;
@@ -301,11 +306,25 @@ class GamePage extends React.Component {
       cards[enemyCards[i]].rotation[1] = 0;
     }
     for (let i = 0; i < middleCards.length; i++) {
-        cards[middleCards[i]].position[0] = 0;
-        cards[middleCards[i]].position[1] = 0;
+      cards[middleCards[i]].position[0] = 0;
+      cards[middleCards[i]].position[1] = 0;
     }
     return cards;
   }
+
+  getOtherPlayerId() {
+    if (this.currentPlayer === 0) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  setWinnerFromChild = (winner) => {
+    this.setState({
+      winner: winner,
+    });
+  };
 
   initCards = () => {
     let cards = [];
@@ -327,7 +346,6 @@ class GamePage extends React.Component {
         number: deck.cards[i].number,
       });
     }
-    //cards = this.shuffleCards(cards);
     return this.shuffleCards(cards);
   };
 
@@ -342,84 +360,91 @@ class GamePage extends React.Component {
       cards,
       changes,
       playerNumber,
-      texte
+      texte,
+      winner,
     } = this.state;
     return (
       <div>
-        <div className="chat-main">
-          {!roomCreated ? (
-            <form onSubmit={this.handlePlayerSubmit}>
-              <input
-                type="text"
-                onChange={this.handleNameChange}
-                value={name}
-                placeholder="name"
-              />
-              <input
-                type="text"
-                onChange={this.handleRoomChange}
-                value={room}
-                placeholder="room name"
-              />
-              <input type="submit" />
-            </form>
-          ) : (
-            <div />
-          )}
+        {winner === -1 ? (
+          <div className="chat-main">
+            {!roomCreated ? (
+              <form onSubmit={this.handlePlayerSubmit}>
+                <input
+                  type="text"
+                  onChange={this.handleNameChange}
+                  value={name}
+                  placeholder="name"
+                />
+                <input
+                  type="text"
+                  onChange={this.handleRoomChange}
+                  value={room}
+                  placeholder="room name"
+                />
+                <input type="submit" />
+              </form>
+            ) : (
+              <div />
+            )}
 
-          {allReady ? (
-            <div className={"game-scene"}>
-              <Uno
-                playerNumber={playerNumber}
-                sendFromChild={this.sendFromChild}
-                refreshCardsFromChild={this.refreshCardsFromChild}
-                canPlay={canPlay}
-                changes={changes}
-                cards={cards}
-                textBack={this.textLoadedBack}
-                textBoard={this.textBoard}
-                buttonSprite={this.BUTTON_SPRITE}
-                setCanActionFromChild={this.setCanActionFromChild}
-                shuffleCardsFromChild={this.shuffleCardsFromChild}
-                texte={texte}
-                updateTexteFromChild={this.updateTexteFromChild}
-              />
-            </div>
-          ) : (
-            <div>
-              <button
-                className={"game-button-ready"}
-                onClick={this.setPlayerReady}
-              >
-                Prêt
-              </button>
-              {
-                <ul class="players">
-                  {this.state.listPlayer.map((player) => (
-                    <div>
-                      <li>
-                        {player.name} :{" "}
-                        {player.ready ? (
-                          <img
-                            class="check"
-                            src="./assets/images/check/check.png"
-                          ></img>
-                        ) : (
-                          <img
-                            class="check"
-                            src="./assets/images/check/no_check.png"
-                          ></img>
-                        )}
-                      </li>
-                    </div>
-                  ))}
-                </ul>
-              }
-              <br />
-              Tous les joueurs ne sont pas prêts.
-            </div>
-          )}
-        </div>
+            {allReady ? (
+              <div className={"game-scene"}>
+                <Uno
+                  playerNumber={playerNumber}
+                  sendFromChild={this.sendFromChild}
+                  refreshCardsFromChild={this.refreshCardsFromChild}
+                  canPlay={canPlay}
+                  changes={changes}
+                  cards={cards}
+                  textBack={this.textLoadedBack}
+                  textBoard={this.textBoard}
+                  buttonSprite={this.BUTTON_SPRITE}
+                  setCanActionFromChild={this.setCanActionFromChild}
+                  shuffleCardsFromChild={this.shuffleCardsFromChild}
+                  texte={texte}
+                  updateTexteFromChild={this.updateTexteFromChild}
+                  winner={winner}
+                  setWinnerFromChild={this.setWinnerFromChild}
+                />
+              </div>
+            ) : (
+              <div>
+                <button
+                  className={"game-button-ready"}
+                  onClick={this.setPlayerReady}
+                >
+                  Prêt
+                </button>
+                {
+                  <ul class="players">
+                    {this.state.listPlayer.map((player) => (
+                      <div>
+                        <li>
+                          {player.name} :{" "}
+                          {player.ready ? (
+                            <img
+                              class="check"
+                              src="./assets/images/check/check.png"
+                            ></img>
+                          ) : (
+                            <img
+                              class="check"
+                              src="./assets/images/check/no_check.png"
+                            ></img>
+                          )}
+                        </li>
+                      </div>
+                    ))}
+                  </ul>
+                }
+                <br />
+                Tous les joueurs ne sont pas prêts.
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>FIN DE GAME</div>
+        )}
         <div class="chat" key="chat">
           <Chat
             onSendMsg={this.onSendMsg}
