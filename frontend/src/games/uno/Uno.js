@@ -302,14 +302,16 @@ class Uno extends React.Component {
       this.props.setWinnerFromChild(this.getOtherPlayerId())
     }
     console.log("winner", this.props.winner);
+    let larger = 60 / playerCards.length;
     for (let i = 0; i < playerCards.length; i++) {
-      cards[playerCards[i]].position[0] = -27 + i * 6;
+      cards[playerCards[i]].position[0] = -27 + i * larger;
       cards[playerCards[i]].position[1] = -32.5;
       cards[playerCards[i]].position[2] = 0.01 * i;
       cards[playerCards[i]].rotation[1] = Math.PI;
     }
+    larger = 60 / enemyCards.length;
     for (let i = 0; i < enemyCards.length; i++) {
-      cards[enemyCards[i]].position[0] = -27 + i * 6;
+      cards[enemyCards[i]].position[0] = -27 + i * larger;
       cards[enemyCards[i]].position[1] = 32.5;
       cards[enemyCards[i]].position[2] = 0.01 * i;
       cards[enemyCards[i]].rotation[1] = 0;
@@ -359,28 +361,12 @@ class Uno extends React.Component {
           color={CARD_COLOR.BLANK}
         />
         <ActionButton
-          position={[40, 3, 0]}
-          cardClick={this.buttonOnClick}
-          rotation={[0, 0, 0]}
-          buttonSize={[14, 6, 0.04]}
-          image={this.props.buttonSprite.REORDER}
-          index={2}
-        />
-        <ActionButton
-          position={[40, -3.5, 0]}
+          position={[40, 0, 0]}
           cardClick={this.buttonOnClick}
           rotation={[0, 0, 0]}
           buttonSize={[14, 6, 0.04]}
           image={this.props.buttonSprite.DRAW_ONE}
           index={1}
-        />
-        <ActionButton
-          position={[40, -10, 0]}
-          cardClick={this.buttonOnClick}
-          rotation={[0, 0, 0]}
-          buttonSize={[14, 6, 0.04]}
-          image={this.props.buttonSprite.DISTRIB_ALL}
-          index={0}
         />
         <Html distanceFactor={100} position={[-2, -8, 0.01]}>
           <div class="content">{this.props.texte}</div>

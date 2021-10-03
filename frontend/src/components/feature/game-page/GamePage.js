@@ -30,7 +30,7 @@ class GamePage extends React.Component {
         `${process.env.PUBLIC_URL}/assets/images/uno/uno_button1.png`
       ),
       DRAW_ONE: this.textureLoader.load(
-        `${process.env.PUBLIC_URL}/assets/images/uno/uno_button2.png`
+        `${process.env.PUBLIC_URL}/assets/images/uno/button_draw.png`
       ),
       REORDER: this.textureLoader.load(
         `${process.env.PUBLIC_URL}/assets/images/uno/uno_button3.png`
