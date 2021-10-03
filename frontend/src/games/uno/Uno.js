@@ -73,8 +73,6 @@ class Uno extends React.Component {
 
   cardOnClick = (index, type, e) => {
     e.stopPropagation();
-    console.log("canplay", this.props.canPlay);
-    console.log("currentplayer", this.currentPlayer);
     if (this.props.canPlay === this.currentPlayer && type !== CARD_TYPE.BLANK) {
       let cards = [...this.state.cards];
       let card = { ...this.state.cards[index] };
@@ -91,7 +89,6 @@ class Uno extends React.Component {
         }
       }
       if (this.cardCanBePlayed(card, middle, topCard)) {
-        console.log("card can be played");
         middle.push(card);
         card.owner = -2;
         card.position[0] = 0;
@@ -122,12 +119,11 @@ class Uno extends React.Component {
           this.props.setCanActionFromChild();
         }
       } else {
-        console.log("card can't be played");
       }
     }
   };
 
-  cardCanBePlayed(card, middle, topCard) {
+  cardCanBePlayed = (card, middle, topCard) => {
     if (middle.length === 0) {
       if (card.type === CARD_TYPE.NUMBER) {
         return true;
@@ -140,10 +136,28 @@ class Uno extends React.Component {
         if (card.type === CARD_TYPE.PICKER) {
           this.drawOneCard(this.getOtherPlayerId());
           this.drawOneCard(this.getOtherPlayerId());
+        } else if (
+          card.type === CARD_TYPE.CHANGER ||
+          card.type == CARD_TYPE.REVERSER
+        ) {
+          return true;
         }
         return true;
       } else if (card.number >= 0 && card.number === topCard.number) {
         return true;
+      } else if (
+        (card.type === CARD_TYPE.CHANGER ||
+          card.type == CARD_TYPE.REVERSER ||
+          card.type === CARD_TYPE.PICKER) &&
+        card.color !== CARD_COLOR.MULTI
+      ) {
+        if (card.type === topCard.type) {
+          if (card.type === CARD_TYPE.PICKER) {
+            this.drawOneCard(this.getOtherPlayerId());
+            this.drawOneCard(this.getOtherPlayerId());
+          }
+          return true;
+        }
       }
 
       if (card.type === CARD_TYPE.FOUR) {
@@ -160,15 +174,13 @@ class Uno extends React.Component {
       }
     }
     return false;
-  }
+  };
 
   buttonOnClick = (index, e) => {
     e.stopPropagation();
     if (this.props.canPlay === this.currentPlayer) {
-      console.log("index button", index);
       switch (index) {
         case 0:
-          console.log("Click button distribution cartes");
           for (let i = 0; i < 7; i++) {
             this.drawOneCard(1);
             this.drawOneCard(0);
@@ -182,7 +194,6 @@ class Uno extends React.Component {
           this.props.setCanActionFromChild();
           break;
         case 1:
-          console.log("Click button piocher carte");
           this.drawOneCard(this.currentPlayer);
           this.reorderCards();
           this.props.sendFromChild(
@@ -192,7 +203,6 @@ class Uno extends React.Component {
           );
           break;
         case 2:
-          console.log("Click button trier cartes");
           this.reorderCards();
           break;
         case 3:
@@ -232,7 +242,6 @@ class Uno extends React.Component {
           this.props.setCanActionFromChild();
           break;
         default:
-          console.log("Click button failed");
           break;
       }
     }
@@ -257,10 +266,8 @@ class Uno extends React.Component {
       }
     }
     if (cardsInDeck.length === 1) {
-      console.log("need shuffle");
       this.props.shuffleCardsFromChild(this.state.cards);
     }
-    console.log("Cartes restantes", cardsInDeck.length);
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].owner === -1 && cards[i].position[2] > topCard.position[2]) {
         indexToGet = i;
@@ -289,6 +296,12 @@ class Uno extends React.Component {
         enemyCards.push(card.index);
       }
     }
+    if (playerCards.length === 0) {
+      this.props.setWinnerFromChild(this.currentPlayer);
+    } else if (enemyCards.length === 0) {
+      this.props.setWinnerFromChild(this.getOtherPlayerId())
+    }
+    console.log("winner", this.props.winner);
     for (let i = 0; i < playerCards.length; i++) {
       cards[playerCards[i]].position[0] = -27 + i * 6;
       cards[playerCards[i]].position[1] = -32.5;
@@ -301,7 +314,6 @@ class Uno extends React.Component {
       cards[enemyCards[i]].position[2] = 0.01 * i;
       cards[enemyCards[i]].rotation[1] = 0;
     }
-    console.log("reorder");
     this.setState({ cards });
   };
 
@@ -422,7 +434,6 @@ class Uno extends React.Component {
   }
 
   distributeCards() {
-    console.log("Click button distribution cartes");
     for (let i = 0; i < 7; i++) {
       this.drawOneCard(1);
       this.drawOneCard(0);
