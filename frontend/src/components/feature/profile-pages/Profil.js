@@ -11,8 +11,8 @@ const Profil = ({ profil }) => {
 
     const [formData, setFormData] = useState({
         googleId: sessionStorage.getItem('id'),
-        name: "",
-        email: "",
+        name: sessionStorage.getItem("name"),
+        email: sessionStorage.getItem("email"),
         password: "",
       });
     
@@ -31,17 +31,15 @@ const Profil = ({ profil }) => {
     if (sessionStorage.getItem("id") == null ) {
         return <Redirect to="/"></Redirect>;
     }
-    let username = sessionStorage.getItem("name");
-    let mail = sessionStorage.getItem("email");
     return (
         <div class="row">
             <div class="Profil">
 
                 <div className="info">
                     <h1 className="Username">Nom d'utilisateur:</h1>
-                    <h2>{username}</h2>
+                    <h2>{sessionStorage.getItem("name")}</h2>
                     <h1 className="mail">Adresse mail:</h1>
-                    <h2>{mail}</h2>
+                    <h2>{sessionStorage.getItem("email")}</h2>
                 </div>
                 <div className="profile">
                     <div className="form-holder">
@@ -50,13 +48,13 @@ const Profil = ({ profil }) => {
                                 <form className="requires-validation" onSubmit={(e) => onSubmit(e)}>
                                     <div className="col-md-12">
                                         <input className="form-control" type="text" name="name" placeholder="Name"
-                                               value={username} onChange={(e) => onChange(e)} required/>
+                                               value={name} onChange={(e) => onChange(e)} required/>
                                         <div className="valid-feedback">Name field is valid!</div>
                                         <div className="invalid-feedback">Name field cannot be blank!</div>
                                     </div>
                                     <div className="col-md-12">
                                         <input className="form-control" type="email" name="email"
-                                               placeholder="E-mail Address" value={mail} onChange={(e) => onChange(e)}
+                                               placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)}
                                                required/>
                                         <div className="valid-feedback">Email field is valid!</div>
                                         <div className="invalid-feedback">Email field cannot be blank!</div>
