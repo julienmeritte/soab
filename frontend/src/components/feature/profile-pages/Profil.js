@@ -50,13 +50,13 @@ const Profil = ({ profil }) => {
                                 <form className="requires-validation" onSubmit={(e) => onSubmit(e)}>
                                     <div className="col-md-12">
                                         <input className="form-control" type="text" name="name" placeholder="Name"
-                                               value={name} onChange={(e) => onChange(e)} required/>
+                                               value={username} onChange={(e) => onChange(e)} required/>
                                         <div className="valid-feedback">Name field is valid!</div>
                                         <div className="invalid-feedback">Name field cannot be blank!</div>
                                     </div>
                                     <div className="col-md-12">
                                         <input className="form-control" type="email" name="email"
-                                               placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)}
+                                               placeholder="E-mail Address" value={mail} onChange={(e) => onChange(e)}
                                                required/>
                                         <div className="valid-feedback">Email field is valid!</div>
                                         <div className="invalid-feedback">Email field cannot be blank!</div>

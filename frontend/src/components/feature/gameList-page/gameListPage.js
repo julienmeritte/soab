@@ -25,8 +25,10 @@ class GameListPage extends React.Component {
     }
 
     handleGameSelect = (event) => {
-        sessionStorage.setItem("gameEnum" , event);
-        this.setState({redirect:true})
+        if (event == "Uno") {
+            sessionStorage.setItem("gameEnum" , event);
+            this.setState({redirect:true})
+        }
     };
 
     render() {
@@ -44,7 +46,7 @@ class GameListPage extends React.Component {
                 {ListGame.map((value, index) => {
                     return (
                         <div class="col-xl-3 col-lg-4 col-md-6 mb-4" key={value.key}>
-                            <div class="bg-white rounded shadow-sm" onClick={() => this.handleGameSelect(value.value)}>
+                            <div class="bg-white rounded shadow-sm" onClick={() => this.handleGameSelect(value.name)}>
                                 <img src={value.picture} alt="" class="img-fluid card-img-top size-img"/>
                                 <div class="p-4">
                                     <h5> <a href="#" class="text-dark">{value.name}</a></h5>
