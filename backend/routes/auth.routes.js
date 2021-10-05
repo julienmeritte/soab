@@ -62,7 +62,12 @@ router.post("/", [
             {expiresIn: 3600 * 60},
             (err, token) => {
                 if (err) throw err;
-                res.json({token});
+                res.json({
+                    id : user.id ,
+                    token : token , 
+                    name : user.name ,
+                    email : user.email
+                });
             }
         );
     } catch (err) {

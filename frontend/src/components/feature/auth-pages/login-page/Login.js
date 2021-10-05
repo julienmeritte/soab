@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import {login} from "../../../../actions/auth";
 import './Login.scss';
 
+
 const Login = ({login, isAuthenticated}) => {
     const [formData, setFormData] = useState({
         email: "",
@@ -25,33 +26,64 @@ const Login = ({login, isAuthenticated}) => {
         return <Redirect to="/"></Redirect>;
     }
 
-    return (
+    return (/*
         <Fragment>
-            <div className={'Login'}>
-                <div className={'display'}>
-                    <h3 className={'formulaire'}>Connexion</h3>
-                    <form onSubmit={(e) => onSubmit(e)}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            name="email"
-                            value={email}
-                            onChange={(e) => onChange(e)}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Mot de passe"
-                            name="password"
-                            value={password}
-                            onChange={(e) => onChange(e)}
-                            required
-                            minLength="6"
-                        />
-                        <input className={'btn'} type="submit" value="Login"/>
-                    </form>
+            
+            <div className={'test'}>
+                <div className={'form-holder'}>
+                <div className={'form-content'}>
+                    <div className={'form-items'}>
+                        <h3>Loging in </h3>
+                        <p>Fill in the data below.</p>
+                        <div className={''}>
+                            <a className={'text-center'} href="/auth/google">
+                                <img src="./google_icon.png" width="25" height="25"/>
+                                <p>Connect With Google</p>
+                            </a>
+                        </div>
+                        <form className={'requires-validation'} onSubmit={(e) => onSubmit(e)}>
+                            <div className={'cold-md-12'}>
+                                <input className={'form-control'} type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
+                                 <div className={'valid-feedback'}>Email field is valid!</div>
+                                 <div className={'invalid-feedback'}>Email field cannot be blank!</div>
+                          </div>
+
+
+                           <div className={'col-md-12'}>
+                              <input className={'form-control'} type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
+                               <div className={'valid-feedback'}>Password field is valid!</div>
+                               <div className={'invalid-feedback'}>Password field cannot be blank!</div>
+                           </div>
+
+                            <div className={'form-button mt-3'}>
+                                <button id="submit" type="submit" className={'btn btn-primary'}>Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 </div>
             </div>
+        </Fragment>*/
+        <Fragment>
+	        <div class="container-fluid w-50 h-25 shadow-lg rounded">
+					<div class="row p-3">
+						<form control="" class="form-group" onSubmit={(e) => onSubmit(e)}>
+							<div class="row">
+								<input class="form__input" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
+							</div>
+							<div class="row">
+								<input class="form__input" type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
+                            </div>
+							<div class="row">
+								<input type="submit" value="Submit" class="btn"/>
+                            </div>
+						</form>
+	
+					<div class="row">
+						<p>Tu n'as pas de compte ? <a href="/register">Créé-en un</a></p>
+                    </div>
+                </div>
+            </div>	
         </Fragment>
     );
 };

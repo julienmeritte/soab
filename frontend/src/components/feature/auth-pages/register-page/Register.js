@@ -33,51 +33,71 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
+      /*<div class="row">
+                <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Loging in </h3>
+                        <p>Fill in the data below.</p>
+                        <form class="requires-validation" onSubmit={(e) => onSubmit(e)}>
+                        <div class="col-md-12">
+                                <input class="form-control" type="text" name="name" placeholder="name" value={name} onChange={(e) => onChange(e)} required/>
+                                 <div class="valid-feedback">Email field is valid!</div>
+                                 <div class="invalid-feedback">Email field cannot be blank!</div>
+                          </div>
+                            <div class="col-md-12">
+                                <input class="form-control" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
+                                 <div class="valid-feedback">Email field is valid!</div>
+                                 <div class="invalid-feedback">Email field cannot be blank!</div>
+                            </div>
+
+
+                           <div class="col-md-12">
+                              <input class="form-control" type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
+                               <div class="valid-feedback">Password field is valid!</div>
+                               <div class="invalid-feedback">Password field cannot be blank!</div>
+                           </div>
+
+                           <div class="col-md-12">
+                              <input class="form-control" type="password" name="passwordBis" placeholder="Confirmed Password" value={passwordBis} onChange={(e) => onChange(e)} minLength="6" required/>
+                               <div class="valid-feedback">Password field is valid!</div>
+                               <div class="invalid-feedback">Password field cannot be blank!</div>
+                           </div>                     
+
+                            <div class="form-button mt-3">
+                                <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>*/
     <Fragment>
-      <div className={'Register'}>
-        <div className={'display'}>
-          <div className={'formulaire'}>
-            <h3>Inscription</h3>
-            <form onSubmit={(e) => onSubmit(e)}>
-              <input
-                  type="text"
-                  placeholder="Nom"
-                  name="name"
-                  value={name}
-                  onChange={(e) => onChange(e)}
-                  required
-              />
-              <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => onChange(e)}
-                  required
-              />
-              <input
-                  type="password"
-                  placeholder="Mot de passe"
-                  name="password"
-                  value={password}
-                  onChange={(e) => onChange(e)}
-                  required
-                  minLength="6"
-              />
-              <input
-                  type="password"
-                  placeholder="Confirmer le mot de passe"
-                  name="passwordBis"
-                  value={passwordBis}
-                  onChange={(e) => onChange(e)}
-                  required
-                  minLength="6"
-              />
-              <input className={'btn'} type="submit" value="Register" />
-            </form>
-          </div>
-        </div>
-      </div>
+      <div class="container-fluid w-50 h-25 shadow-lg rounded">
+					<div class="row p-3">
+						<form control="" class="form-group" onSubmit={(e) => onSubmit(e)}>
+							<div class="row">
+								<input class="form__input" type="text" name="name" placeholder="name" value={name} onChange={(e) => onChange(e)} required/>
+							</div>
+							<div class="row">
+								<input class="form__input" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
+              </div>
+              <div class="row">
+								<input class="form__input" type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
+              </div>
+              <div class="row">
+								<input class="form__input" type="password" name="passwordBis" placeholder="Confirmed Password" value={passwordBis} onChange={(e) => onChange(e)} minLength="6" required/>
+              </div>
+							<div class="row">
+								<input type="submit" value="Submit" class="btn"/>
+              </div>
+						</form>
+	
+					<div class="row">
+						<p>Tu as déjà un compte ? <a href="/login">Connecte toi</a></p>
+                    </div>
+                </div>
+          </div>	
     </Fragment>
   );
 };

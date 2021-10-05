@@ -1,0 +1,51 @@
+@import "src/assets/main";
+
+.home-page {
+  width: 100%;
+}
+
+.fade-in {
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.l-animation{
+  animation: leftToRight ease 3s;
+}   
+
+.r-animation{
+  animation: rightToLeft ease 3s;
+}   
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+   }
+}
+
+
+@keyframes rightToLeft {
+  0% { margin-right: -98%;}
+  100%{ margin-right: 0%;}
+}
+
+@keyframes leftToRight {
+  0% { margin-left: -98%;}
+  100%{ margin-left: 0%;}
+}
+
+.color-blue {
+  color: rgb(68, 68, 250);
+}
+
+.color-green {
+  color:rgb(95, 218, 95);
+}
+
+.color-purple {
+  color:rgb(161, 94, 216);
+}

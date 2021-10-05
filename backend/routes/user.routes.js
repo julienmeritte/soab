@@ -8,6 +8,55 @@ const {check, validationResult} = require("express-validator/check");
 
 const User = require("../models/User");
 
+
+
+router.put("/update" , [
+    check('googleId', 'Id required').not().isEmpty(),
+    check('name', 'Name required').not().isEmpty(),
+    check('email', 'email not valid').isEmail(),
+    check('password', 'password not valid').isLength({
+        min: 6
+    })
+] , async(req , res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
+    const {googleId , name , email , password} = req.body;
+    console.log(googleId);
+    try {
+        let user = await User.findById(googleId)
+        if (user) {
+            user.name = name;
+            user.email = email;
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+            await user.save();
+        }
+        else {
+            return res.status(400).json({
+                errors: [{msg: "L'utilisateur n'existe pas"}]
+            });
+        }
+        return res.status(200).json({
+            user: [{
+                id : user.id , 
+                name : user.name ,
+                email : user.email ,
+            }]
+        });
+    }
+    catch(err) {
+        console.error(err.message);
+        res.status(500).send("Erreur serveur");
+    }
+
+}
+);
+
+
 router.post("/register", [
     check('name', 'Name required').not().isEmpty(),
     check('email', 'email not valid').isEmail(),

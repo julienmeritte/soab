@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+@import "assets/main";
 
 @mixin alert-color($color) {
   background-color: $color;
@@ -31,50 +29,17 @@ nav {
   display: none;
 }
 
-header {
-  display: flex;
-  justify-content: space-evenly;
-  flex: 0 0 100%;
-  max-width: 100%;
-  border-bottom: 2px solid #000;
-
-  .logo {
-    justify-content: center;
-    display: flex;
-    flex: 0 0 30%;
-    max-width: 30%;
-
-    img {
-      width: 210px;
-      height: 100px;
-    }
-  }
-
-  .redirection {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    flex: 0 0 50%;
-    max-width: 50%;
-
-    button {
-      width: 110px;
-      border: 3px solid #206ddc;
-      font-weight: bold;
-      border-radius: 20px;
-      background: #fff;
-      color: #6a6a6a;
-
-      &:hover {
-        background: #206ddc;
-        color: #fff;
-      }
-    }
-  }
-}
-
 footer {
   text-align: center;
   margin: 20px 0;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  padding: 40px 0;
+  color: inherit;
+  min-height: calc(100vh - 102px - 70px);
+  background-color: $white;
 }
