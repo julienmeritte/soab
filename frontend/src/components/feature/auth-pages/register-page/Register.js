@@ -33,8 +33,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
-      <div class="row">
+      /*<div class="row">
                 <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
@@ -72,7 +71,33 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                     </div>
                 </div>
                 </div>
-            </div>
+            </div>*/
+    <Fragment>
+      <div class="container-fluid w-50 h-25 shadow-lg rounded">
+					<div class="row p-3">
+						<form control="" class="form-group" onSubmit={(e) => onSubmit(e)}>
+							<div class="row">
+								<input class="form__input" type="text" name="name" placeholder="name" value={name} onChange={(e) => onChange(e)} required/>
+							</div>
+							<div class="row">
+								<input class="form__input" type="email" name="email" placeholder="E-mail Address" value={email} onChange={(e) => onChange(e)} required/>
+              </div>
+              <div class="row">
+								<input class="form__input" type="password" name="password" placeholder="Password" value={password} onChange={(e) => onChange(e)} minLength="6" required/>
+              </div>
+              <div class="row">
+								<input class="form__input" type="password" name="passwordBis" placeholder="Confirmed Password" value={passwordBis} onChange={(e) => onChange(e)} minLength="6" required/>
+              </div>
+							<div class="row">
+								<input type="submit" value="Submit" class="btn"/>
+              </div>
+						</form>
+	
+					<div class="row">
+						<p>Tu as déjà un compte ? <a href="/login">Connecte toi</a></p>
+                    </div>
+                </div>
+          </div>	
     </Fragment>
   );
 };
